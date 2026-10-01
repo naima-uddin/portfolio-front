@@ -40,7 +40,7 @@ const ProjectsGrid = ({ projects }: { projects: Project[] }) => {
       </div>
 
       {/* Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {filtered.map((project, index) => (
           <div
             key={project.id}

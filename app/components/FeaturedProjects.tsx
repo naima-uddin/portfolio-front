@@ -6,19 +6,23 @@ import { getProjects } from "@/lib/projectService";
 
 const FeaturedProjects = async () => {
   const { projects } = await getProjects();
-  const featured = projects.filter((p) => p.featured);
+  // Featured first, then the rest — up to two rows of four.
+  const shown = [
+    ...projects.filter((p) => p.featured),
+    ...projects.filter((p) => !p.featured),
+  ].slice(0, 8);
 
   return (
-    <section id="works" className="scroll-mt-16 relative bg-[#eceef2] py-14 lg:py-16">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="works" className="scroll-mt-16 relative bg-[#eceef2] py-8 lg:py-10">
+      <div className="mx-auto w-full max-w-7xl px-6">
         <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-8 lg:mb-10">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-5">
             <div>
-              <p className="font-mono text-sm font-semibold text-brand-600 mb-3">
+              <p className="font-mono text-xs font-semibold text-brand-600 mb-1">
                 03 — Work
               </p>
-              <h2 className="text-3xl lg:text-5xl font-bold text-zinc-900 tracking-tight">
-                Selected projects
+              <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
+                Selected <span className="text-brand-600">projects</span>
               </h2>
             </div>
             <Link
@@ -34,9 +38,9 @@ const FeaturedProjects = async () => {
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {featured.map((project, i) => (
-            <Reveal key={project.id} delay={(i % 2) * 100}>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {shown.map((project, i) => (
+            <Reveal key={project.id} delay={(i % 4) * 80}>
               <ProjectCard project={project} />
             </Reveal>
           ))}

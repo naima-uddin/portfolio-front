@@ -43,6 +43,7 @@ interface FormState {
   color: string;
   image: string;
   liveUrl: string;
+  githubUrl: string;
   shortDesc: string;
   description: string;
   tags: string;
@@ -64,6 +65,7 @@ const toFormState = (p?: Project): FormState => ({
   color: p?.color ?? "#34d399",
   image: p?.image ?? "",
   liveUrl: p?.liveUrl ?? "",
+  githubUrl: p?.githubUrl ?? "",
   shortDesc: p?.shortDesc ?? "",
   description: p?.description ?? "",
   tags: p?.tags.join(", ") ?? "",
@@ -112,6 +114,7 @@ const ProjectForm = ({ initial }: { initial?: Project }) => {
       color: form.color,
       image: form.image.trim() || undefined,
       liveUrl: form.liveUrl.trim() || "#",
+      githubUrl: form.githubUrl.trim(),
       shortDesc: form.shortDesc.trim(),
       description: form.description.trim(),
       tags: commaToArray(form.tags),
@@ -259,6 +262,15 @@ const ProjectForm = ({ initial }: { initial?: Project }) => {
                   value={form.liveUrl}
                   onChange={(e) => set("liveUrl", e.target.value)}
                   placeholder="https://..."
+                />
+              </div>
+              <div>
+                <label className={labelClasses}>GitHub repo URL</label>
+                <input
+                  className={inputClasses}
+                  value={form.githubUrl}
+                  onChange={(e) => set("githubUrl", e.target.value)}
+                  placeholder="https://github.com/..."
                 />
               </div>
               <div>
