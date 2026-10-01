@@ -60,6 +60,7 @@ export const siteConfig = {
   facebook: "#", // Add your Facebook URL from the dashboard.
   instagram: "#", // Add your Instagram URL from the dashboard.
   photo: "/assets/myPics/photoCircle.png", // Upload your own photo from the dashboard.
+  heroImage: "", // Transparent PNG for the home banner — upload from the dashboard.
   availability: "Open to freelance & interesting projects",
   summary:
     "Passionate full-stack web developer with 2+ years of experience building scalable applications. Currently working as a Frontend Developer at A2IT LTD, specializing in Next.js and modern frontend architectures.",

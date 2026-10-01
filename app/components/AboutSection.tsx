@@ -35,7 +35,7 @@ const AboutSection = ({
   skills?: Skills;
 }) => {
   return (
-    <section className="relative bg-[#0a0a0f] py-28">
+    <section id="about" className="scroll-mt-16 relative bg-[#0a0a0f] py-28">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <SectionHeading eyebrow="01 — About" title="Who I am" />

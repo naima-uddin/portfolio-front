@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import ScrollProgress from "@/components/ScrollProgress";
+import { getSiteContent } from "@/lib/siteContentService";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,11 +57,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = await getSiteContent();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -68,7 +71,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ScrollProgress />
-        <Header />
+        <Header config={content.profile} />
         {children}
       </body>
     </html>

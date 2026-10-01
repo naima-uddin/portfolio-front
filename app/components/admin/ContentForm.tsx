@@ -198,6 +198,13 @@ export default function ContentForm() {
           preview="image"
         />
         <UploadField
+          label="Home banner image (transparent PNG works best)"
+          value={p.heroImage}
+          onChange={(v) => patchProfile({ heroImage: v })}
+          accept="image/*"
+          preview="image"
+        />
+        <UploadField
           label="Résumé (PDF)"
           value={p.resumeUrl}
           onChange={(v) => patchProfile({ resumeUrl: v })}

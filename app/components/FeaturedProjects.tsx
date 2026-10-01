@@ -9,7 +9,7 @@ const FeaturedProjects = async () => {
   const featured = projects.filter((p) => p.featured);
 
   return (
-    <section className="relative bg-[#0a0a0f] py-28 border-t border-white/5">
+    <section id="works" className="scroll-mt-16 relative bg-[#0a0a0f] py-28 border-t border-white/5">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-14">

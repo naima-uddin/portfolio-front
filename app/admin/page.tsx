@@ -2,16 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   AlertTriangle,
   DatabaseZap,
   ExternalLink,
   Loader2,
-  LogOut,
   Pencil,
   Plus,
-  SlidersHorizontal,
   Star,
   Trash2,
 } from "lucide-react";
@@ -26,7 +23,6 @@ interface ApiResult {
 }
 
 export default function AdminDashboard() {
-  const router = useRouter();
   const [data, setData] = useState<ApiResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
@@ -79,15 +75,9 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleLogout = async () => {
-    await apiFetch("/api/auth/logout", { method: "POST" });
-    router.push("/naimaslogin");
-    router.refresh();
-  };
-
   return (
-    <main className="min-h-screen bg-[#0a0a0f] pt-28 pb-20">
-      <div className="max-w-5xl mx-auto px-6">
+    <div className="py-8 lg:py-10">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Top bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
           <div>
@@ -98,26 +88,12 @@ export default function AdminDashboard() {
           </div>
           <div className="flex items-center gap-3">
             <Link
-              href="/admin/content"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass text-zinc-200 text-sm font-medium hover:bg-white/10 transition-all"
-            >
-              <SlidersHorizontal size={16} />
-              Edit Site Content
-            </Link>
-            <Link
               href="/admin/projects/new"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-400 text-zinc-950 text-sm font-semibold hover:bg-emerald-300 transition-all"
             >
               <Plus size={16} />
               New Project
             </Link>
-            <button
-              onClick={handleLogout}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass text-zinc-300 text-sm hover:bg-white/10 transition-all"
-            >
-              <LogOut size={16} />
-              Logout
-            </button>
           </div>
         </div>
 
@@ -251,6 +227,6 @@ export default function AdminDashboard() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

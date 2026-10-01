@@ -21,18 +21,18 @@ export default function EditProjectPage() {
 
   if (notFound) {
     return (
-      <main className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-zinc-400">
+      <div className="min-h-[70vh] flex items-center justify-center text-zinc-400">
         Project not found.
-      </main>
+      </div>
     );
   }
 
   if (!project) {
     return (
-      <main className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-zinc-500">
+      <div className="min-h-[70vh] flex items-center justify-center text-zinc-500">
         <Loader2 size={24} className="animate-spin mr-3" />
         Loading project...
-      </main>
+      </div>
     );
   }
 

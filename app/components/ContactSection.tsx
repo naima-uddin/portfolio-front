@@ -94,6 +94,7 @@ const ContactSection = ({
 
   return (
     <section
+      id="contact"
       className={`relative overflow-hidden ${
         standalone
           ? "pt-36 pb-24"

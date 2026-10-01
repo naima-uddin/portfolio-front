@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 // Thin gradient progress bar fixed to the top of the viewport.
 const ScrollProgress = () => {
   const [progress, setProgress] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => {
@@ -16,6 +18,8 @@ const ScrollProgress = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <div className="fixed top-0 left-0 right-0 h-[2px] z-[60] pointer-events-none">

@@ -242,7 +242,7 @@ const SkillsPlayground = () => {
   }, [started, reducedMotion]);
 
   return (
-    <section className="relative bg-[#0a0a0f] py-28 border-t border-white/5 overflow-hidden">
+    <section id="skills" className="scroll-mt-16 relative bg-[#0a0a0f] py-28 border-t border-white/5 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
           <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-[0.25em]">

@@ -21,7 +21,11 @@ export default async function Home() {
 
   return (
     <main className="bg-[#0a0a0f]">
-      <Hero config={content.profile} intro={content.heroIntro} />
+      <Hero
+        config={content.profile}
+        intro={content.heroIntro}
+        stats={content.stats}
+      />
       <TechMarquee marqueeSkills={content.marqueeSkills} />
       <AboutSection
         config={content.profile}
