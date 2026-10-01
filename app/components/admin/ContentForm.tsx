@@ -205,6 +205,13 @@ export default function ContentForm() {
           preview="image"
         />
         <UploadField
+          label="Experience ID card photo (portrait works best)"
+          value={p.idCardImage}
+          onChange={(v) => patchProfile({ idCardImage: v })}
+          accept="image/*"
+          preview="image"
+        />
+        <UploadField
           label="Résumé (PDF)"
           value={p.resumeUrl}
           onChange={(v) => patchProfile({ resumeUrl: v })}

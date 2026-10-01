@@ -312,19 +312,19 @@ const SkillsPlayground = ({
   }, [started, reducedMotion, techs]);
 
   return (
-    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] py-14 lg:py-16 border-t border-slate-900/5 overflow-hidden">
+    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] pt-2 pb-8 lg:pb-10 overflow-hidden">
       {/* Soft green dot grid backdrop */}
       <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-      <div className="relative max-w-6xl mx-auto px-6">
-        <div className="text-center mb-8">
-          <span className="inline-block px-3 py-1 rounded-full border border-brand-500/40 bg-brand-500/10 font-mono text-xs sm:text-sm font-bold text-brand-600 uppercase tracking-[0.25em]">
+      <div className="relative mx-auto w-full max-w-7xl px-6">
+        <div className="text-center mb-5">
+          <span className="inline-block px-2.5 py-0.5 rounded-full border border-brand-500/40 bg-brand-500/10 font-mono text-[11px] font-bold text-brand-600 uppercase tracking-[0.2em]">
             Tech Stack
           </span>
-          <h2 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 tracking-tight">
+          <h2 className="mt-2 text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
             My <span className="text-gradient">Skills</span>
           </h2>
           {!reducedMotion && (
-            <p className="mt-4 text-sm text-slate-500 font-mono">
+            <p className="mt-1 text-xs text-slate-500 font-mono">
               ✦ grab a bubble and throw it around
             </p>
           )}
@@ -348,7 +348,7 @@ const SkillsPlayground = ({
         ) : (
           <div
             ref={containerRef}
-            className="relative h-[380px] sm:h-[300px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-3xl border border-slate-900/10 bg-white/60 shadow-[inset_0_2px_12px_rgba(15,23,42,0.05)]"
+            className="relative h-[320px] sm:h-[190px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-2xl border border-slate-900/10 bg-white/60 shadow-[inset_0_2px_12px_rgba(15,23,42,0.05)]"
           >
             {techs.map(({ name, Icon, color }, i) => (
               <div
@@ -356,14 +356,14 @@ const SkillsPlayground = ({
                 ref={(el) => {
                   chipRefs.current[i] = el;
                 }}
-                className="absolute top-0 left-0 w-[68px] h-[68px] sm:w-[88px] sm:h-[88px] rounded-full bg-white border border-slate-900/10 flex flex-col items-center justify-center gap-1 will-change-transform"
+                className="absolute top-0 left-0 w-[64px] h-[64px] sm:w-[76px] sm:h-[76px] rounded-full bg-white border border-slate-900/10 flex flex-col items-center justify-center gap-1 will-change-transform"
                 style={{
                   transform: "translate(-200px, -200px)",
                   boxShadow: `0 6px 18px -6px ${color}55, inset 0 0 12px ${color}12`,
                 }}
               >
-                <Icon className="text-xl sm:text-[26px]" style={{ color }} />
-                <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-wide text-slate-600">
+                <Icon className="text-lg sm:text-[22px]" style={{ color }} />
+                <span className="font-mono text-[7px] sm:text-[8px] uppercase tracking-wide text-slate-600">
                   {name}
                 </span>
               </div>

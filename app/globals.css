@@ -360,6 +360,13 @@
 .animate-marquee-reverse { animation: marquee 36s linear infinite reverse; }
 .animate-blink { animation: blink 2s ease-in-out infinite; }
 .animate-spin-slow { animation: spin-slow 16s linear infinite; }
+.animate-id-swing { animation: id-swing 5s ease-in-out infinite; }
+
+/* Hanging ID card sway */
+@keyframes id-swing {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
 
 /* Initial hidden state for entrance animations */
 .animate-slide-up,
@@ -394,6 +401,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .animate-id-swing { animation: none; }
   .animate-marquee { animation-duration: 60s; }
   .reveal { transition: none; opacity: 1; transform: none; }
 }

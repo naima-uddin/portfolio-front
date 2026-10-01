@@ -31,7 +31,10 @@ export default async function Home() {
         skills={content.skills}
         stats={content.stats}
       />
-      <ExperienceSection experiences={content.experiences} />
+      <ExperienceSection
+        experiences={content.experiences}
+        config={content.profile}
+      />
       <SkillsPlayground extraSkills={content.marqueeSkills} />
       <FeaturedProjects />
       <GithubContributions />
