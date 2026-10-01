@@ -77,8 +77,8 @@ export default async function About() {
                 style={{ animationDelay: "400ms" }}
               >
                 <a
-                  href={siteConfig.resumeUrl}
-                  download
+                  href="/resume.pdf"
+                  download="Naima-Uddin-Resume.pdf"
                   className="flex-1 sm:flex-none whitespace-nowrap inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base rounded-full bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-all duration-300 hover:shadow-lg shadow-brand-600/25"
                 >
                   <Download size={18} />
