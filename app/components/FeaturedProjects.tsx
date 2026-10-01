@@ -6,11 +6,13 @@ import { getProjects } from "@/lib/projectService";
 
 const FeaturedProjects = async () => {
   const { projects } = await getProjects();
-  // Featured first, then the rest — up to two rows of four.
-  const shown = [
+  // Featured first, then the rest. Two rows by default: 4 per row on
+  // desktop (8 tiles), 2 per row on mobile (4 tiles). The rest live on /projects.
+  const ordered = [
     ...projects.filter((p) => p.featured),
     ...projects.filter((p) => !p.featured),
-  ].slice(0, 8);
+  ];
+  const shown = ordered.slice(0, 8);
 
   return (
     <section id="works" className="scroll-mt-16 relative bg-[#eceef2] py-8 lg:py-10">
@@ -25,25 +27,33 @@ const FeaturedProjects = async () => {
                 Selected <span className="text-brand-600">projects</span>
               </h2>
             </div>
-            <Link
-              href="/projects"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors"
-            >
-              View all projects
-              <ArrowRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
           </div>
         </Reveal>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {shown.map((project, i) => (
-            <Reveal key={project.id} delay={(i % 4) * 80}>
+            <Reveal
+              key={project.id}
+              delay={(i % 4) * 80}
+              className={i >= 4 ? "hidden lg:block" : ""}
+            >
               <ProjectCard project={project} />
             </Reveal>
           ))}
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 border border-zinc-900 px-6 py-2.5 text-sm font-semibold text-zinc-900 transition-colors duration-300 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
+          >
+            View all projects
+            <span className="text-xs font-medium opacity-60">({ordered.length})</span>
+            <ArrowRight
+              size={16}
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </Link>
         </div>
       </div>
     </section>
