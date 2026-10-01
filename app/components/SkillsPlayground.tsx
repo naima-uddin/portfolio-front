@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import {
   SiJavascript,
@@ -19,7 +19,13 @@ import {
   SiGithub,
   SiPostman,
   SiFigma,
+  SiReactquery,
+  SiShadcnui,
+  SiOpenapiinitiative,
 } from "react-icons/si";
+import { GiBearFace } from "react-icons/gi";
+import { LuServer, LuCodeXml } from "react-icons/lu";
+import { marqueeSkills as defaultExtraSkills } from "@/lib/data";
 
 interface Tech {
   name: string;
@@ -46,6 +52,46 @@ const TECHS: Tech[] = [
   { name: "Figma", Icon: SiFigma, color: "#F24E1E" },
 ];
 
+// Icons for skills that can be added from the dashboard's skill list.
+// Keys are normalized names (lowercase, letters/digits only).
+const EXTRA_ICONS: Record<string, Omit<Tech, "name">> = {
+  zustand: { Icon: GiBearFace, color: "#443E38" },
+  tanstackquery: { Icon: SiReactquery, color: "#FF4154" },
+  reactquery: { Icon: SiReactquery, color: "#FF4154" },
+  shadcnui: { Icon: SiShadcnui, color: "#111111" },
+  restapi: { Icon: SiOpenapiinitiative, color: "#6BA539" },
+  ssr: { Icon: LuServer, color: "#1a7f37" },
+};
+
+// Aliases so "Tailwind CSS" matches the "Tailwind" bubble, etc.
+const ALIASES: Record<string, string> = {
+  tailwindcss: "tailwind",
+  framermotion: "framer",
+  expressjs: "express",
+  node: "nodejs",
+};
+
+const normalize = (name: string) => {
+  const key = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return ALIASES[key] ?? key;
+};
+
+// Built-in bubbles plus any skill from the dashboard list not already shown.
+function buildTechs(extra: string[]): Tech[] {
+  const seen = new Set(TECHS.map((t) => normalize(t.name)));
+  const list = [...TECHS];
+  for (const name of extra) {
+    const key = normalize(name);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    list.push({
+      name,
+      ...(EXTRA_ICONS[key] ?? { Icon: LuCodeXml, color: "#1a7f37" }),
+    });
+  }
+  return list;
+}
+
 interface Body {
   x: number; // center x
   y: number; // center y
@@ -60,7 +106,12 @@ const FRICTION = 0.995;
 
 // Interactive "ball pit" of tech icons: chips drop in when the section
 // scrolls into view, collide with each other, and can be thrown around.
-const SkillsPlayground = () => {
+const SkillsPlayground = ({
+  extraSkills = defaultExtraSkills,
+}: {
+  extraSkills?: string[];
+}) => {
+  const techs = useMemo(() => buildTechs(extraSkills), [extraSkills]);
   const containerRef = useRef<HTMLDivElement>(null);
   const chipRefs = useRef<(HTMLDivElement | null)[]>([]);
   const bodies = useRef<Body[]>([]);
@@ -109,7 +160,7 @@ const SkillsPlayground = () => {
     // container has a real size — spawning against a 0×0 box (e.g. right
     // after a hot reload or a jump-link) pins every chip above the box.
     const spawn = () => {
-      bodies.current = TECHS.map((_, i) => ({
+      bodies.current = techs.map((_, i) => ({
         x: radius + Math.random() * (width - radius * 2),
         y: -radius - Math.random() * height * 0.8 - i * 10,
         vx: (Math.random() - 0.5) * 2,
@@ -258,14 +309,14 @@ const SkillsPlayground = () => {
       container.removeEventListener("pointerup", endDrag);
       container.removeEventListener("pointercancel", endDrag);
     };
-  }, [started, reducedMotion]);
+  }, [started, reducedMotion, techs]);
 
   return (
-    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] py-28 border-t border-slate-900/5 overflow-hidden">
+    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] py-14 lg:py-16 border-t border-slate-900/5 overflow-hidden">
       {/* Soft green dot grid backdrop */}
       <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
       <div className="relative max-w-6xl mx-auto px-6">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <span className="inline-block px-3 py-1 rounded-full border border-brand-500/40 bg-brand-500/10 font-mono text-xs sm:text-sm font-bold text-brand-600 uppercase tracking-[0.25em]">
             Tech Stack
           </span>
@@ -282,7 +333,7 @@ const SkillsPlayground = () => {
         {reducedMotion ? (
           // Static fallback when the user prefers reduced motion
           <div className="flex flex-wrap justify-center gap-4">
-            {TECHS.map(({ name, Icon, color }) => (
+            {techs.map(({ name, Icon, color }) => (
               <div
                 key={name}
                 className="flex items-center gap-2.5 px-5 py-3 rounded-full surface"
@@ -297,9 +348,9 @@ const SkillsPlayground = () => {
         ) : (
           <div
             ref={containerRef}
-            className="relative h-[280px] sm:h-[320px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-3xl border border-slate-900/10 bg-white/60 shadow-[inset_0_2px_12px_rgba(15,23,42,0.05)]"
+            className="relative h-[380px] sm:h-[300px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-3xl border border-slate-900/10 bg-white/60 shadow-[inset_0_2px_12px_rgba(15,23,42,0.05)]"
           >
-            {TECHS.map(({ name, Icon, color }, i) => (
+            {techs.map(({ name, Icon, color }, i) => (
               <div
                 key={name}
                 ref={(el) => {

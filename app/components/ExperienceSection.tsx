@@ -8,7 +8,7 @@ const ExperienceSection = ({
   experiences?: Experience[];
 }) => {
   return (
-    <section id="experience" className="scroll-mt-16 relative bg-[#eceef2] py-28 border-t border-slate-900/5">
+    <section id="experience" className="scroll-mt-16 relative bg-[#eceef2] py-14 lg:py-16 border-t border-slate-900/5">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <SectionHeading eyebrow="02 — Experience" title="Where I've worked" />

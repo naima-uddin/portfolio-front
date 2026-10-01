@@ -12,14 +12,14 @@ export default async function ProjectsPage() {
 
   return (
     <main className="bg-[#eceef2] min-h-screen">
-      <section className="relative pt-36 pb-24 overflow-hidden">
+      <section className="relative pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-grid" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] glow-emerald" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#eceef2]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           {/* Heading */}
-          <div className="mb-14">
+          <div className="mb-8 lg:mb-10">
             <p className="animate-slide-down font-mono text-sm font-semibold text-brand-600 mb-4">
               Work
             </p>

@@ -93,10 +93,10 @@ const GithubContributions = async () => {
     : [];
 
   return (
-    <section className="relative bg-[#eceef2] py-28 border-t border-slate-900/5">
+    <section className="relative bg-[#eceef2] py-14 lg:py-16 border-t border-slate-900/5">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-8">
             <div>
               <p className="font-mono text-sm font-semibold text-brand-600 mb-3">GitHub</p>
               <h2 className="text-3xl lg:text-5xl font-bold text-zinc-900 tracking-tight">

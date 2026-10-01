@@ -9,7 +9,7 @@ const Footer = ({ config = siteConfig }: { config?: SiteConfig }) => {
   return (
     <footer className="relative bg-[#0d1117] border-t border-[#30363d] overflow-hidden">
       {/* Big CTA */}
-      <div className="relative max-w-6xl mx-auto px-6 py-28">
+      <div className="relative max-w-6xl mx-auto px-6 py-14 lg:py-16">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] glow-navy" />
         <Reveal>
           <div className="relative text-center">

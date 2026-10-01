@@ -42,7 +42,7 @@ export default async function About() {
   return (
     <main className="bg-[#eceef2] min-h-screen">
       {/* Intro */}
-      <section className="relative pt-36 pb-20 overflow-hidden">
+      <section className="relative pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-grid" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] glow-emerald" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#eceef2]" />
@@ -159,7 +159,7 @@ export default async function About() {
           </div>
 
           {/* Stats (awrs-style counters) */}
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
             {stats.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 80}>
                 <div className="surface rounded-2xl p-6 h-full text-center hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
@@ -232,7 +232,7 @@ export default async function About() {
       <ExperienceSection experiences={experiences} />
 
       {/* Education */}
-      <section className="relative bg-[#eceef2] py-28 border-t border-slate-900/5">
+      <section className="relative bg-[#eceef2] py-14 lg:py-16 border-t border-slate-900/5">
         <div className="max-w-6xl mx-auto px-6">
           <Reveal>
             <div className="max-w-2xl">

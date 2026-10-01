@@ -1,5 +1,4 @@
 import Hero from "@/components/Hero";
-import TechMarquee from "@/components/TechMarquee";
 import AboutSection from "@/components/AboutSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsPlayground from "@/components/SkillsPlayground";
@@ -26,14 +25,14 @@ export default async function Home() {
         intro={content.heroIntro}
         stats={content.stats}
       />
-      <TechMarquee marqueeSkills={content.marqueeSkills} />
       <AboutSection
         config={content.profile}
         education={content.education}
         skills={content.skills}
+        stats={content.stats}
       />
       <ExperienceSection experiences={content.experiences} />
-      <SkillsPlayground />
+      <SkillsPlayground extraSkills={content.marqueeSkills} />
       <FeaturedProjects />
       <GithubContributions />
       <ContactSection config={content.profile} />

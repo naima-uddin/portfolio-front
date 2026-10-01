@@ -21,7 +21,7 @@ const ProjectsGrid = ({ projects }: { projects: Project[] }) => {
     <>
       {/* Filters */}
       <div
-        className="animate-slide-up flex flex-wrap gap-2 mb-12"
+        className="animate-slide-up flex flex-wrap gap-2 mb-8"
         style={{ animationDelay: "320ms" }}
       >
         {categories.map((category) => (

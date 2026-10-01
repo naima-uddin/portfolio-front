@@ -258,7 +258,7 @@ export default function ContentForm() {
           ))}
         </div>
         <div>
-          <label className={label}>Marquee skills (comma separated)</label>
+          <label className={label}>"My Skills" bubbles (comma separated)</label>
           <input
             className={input}
             value={content.marqueeSkills.join(", ")}

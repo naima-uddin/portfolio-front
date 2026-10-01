@@ -90,7 +90,7 @@ export default async function ProjectDetailPage({
           </Link>
 
           {/* Hero */}
-          <div className="mb-14">
+          <div className="mb-8 lg:mb-10">
             <div className="animate-slide-down flex flex-wrap items-center gap-3 mb-5">
               <span className="font-mono text-xs uppercase tracking-wider text-slate-500">
                 {project.category}

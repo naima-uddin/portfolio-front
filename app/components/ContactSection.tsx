@@ -97,8 +97,8 @@ const ContactSection = ({
       id="contact"
       className={`relative overflow-hidden ${
         standalone
-          ? "pt-36 pb-24"
-          : "bg-[#eceef2] py-28 border-t border-slate-900/5"
+          ? "pt-32 pb-16"
+          : "bg-[#eceef2] py-14 lg:py-16 border-t border-slate-900/5"
       }`}
     >
       {standalone && (
