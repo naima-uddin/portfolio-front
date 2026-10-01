@@ -67,7 +67,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0a0f]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#eceef2]`}
         suppressHydrationWarning
       >
         <ScrollProgress />

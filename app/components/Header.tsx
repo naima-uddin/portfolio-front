@@ -65,9 +65,9 @@ const Header = ({ config = siteConfig }: { config?: SiteConfig }) => {
             className="flex items-center gap-2 text-zinc-900 font-semibold text-lg group"
           >
             <CodeXml
+              className="text-brand-600 transition-transform duration-300 group-hover:-rotate-6"
               size={22}
               strokeWidth={2.25}
-              className="transition-transform duration-300 group-hover:-rotate-6"
             />
             Portfolio
           </Link>
@@ -78,7 +78,7 @@ const Header = ({ config = siteConfig }: { config?: SiteConfig }) => {
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-zinc-950 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-slate-700 after:transition-all after:duration-300 hover:after:w-full"
+                className="relative text-sm font-medium text-slate-700 transition-colors duration-200 hover:text-brand-600 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-brand-600 after:transition-all after:duration-300 hover:after:w-full"
               >
                 {item.label}
               </Link>
@@ -94,7 +94,7 @@ const Header = ({ config = siteConfig }: { config?: SiteConfig }) => {
                 target={href.startsWith("mailto:") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="p-1 text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:text-zinc-950"
+                className="p-1 text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:text-brand-600"
               >
                 <Icon size={20} />
               </a>

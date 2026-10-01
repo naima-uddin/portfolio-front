@@ -20,7 +20,7 @@ export default async function Home() {
   const content = await getSiteContent();
 
   return (
-    <main className="bg-[#0a0a0f]">
+    <main className="bg-[#eceef2]">
       <Hero
         config={content.profile}
         intro={content.heroIntro}

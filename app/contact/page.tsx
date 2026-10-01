@@ -16,7 +16,7 @@ export default async function Contact() {
   const content = await getSiteContent();
 
   return (
-    <main className="bg-[#0a0a0f] min-h-screen">
+    <main className="bg-[#eceef2] min-h-screen">
       <ContactSection standalone config={content.profile} />
       <Footer config={content.profile} />
     </main>

@@ -10,7 +10,7 @@ import type { Project } from "@/lib/data";
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <TiltCard className="h-full">
-      <div className="group relative aspect-[4/3] gradient-border glass rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <div className="group relative aspect-[4/3] gradient-border surface rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(15,23,42,0.15)]">
         {/* Media */}
         {project.image ? (
           <Image
@@ -22,7 +22,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           />
         ) : (
           // Styled fallback for projects without screenshots
-          <div className="absolute inset-0 bg-grid bg-[#101018] flex items-center justify-center">
+          <div className="absolute inset-0 bg-grid bg-[#e2e4ea] flex items-center justify-center">
             <div
               className="absolute inset-0 opacity-25"
               style={{
@@ -39,18 +39,18 @@ const ProjectCard = ({ project }: { project: Project }) => {
         )}
 
         {/* Always-visible bottom caption (fades out when overlay opens) */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a0a0f]/95 via-[#0a0a0f]/50 to-transparent px-5 pt-14 pb-4 transition-opacity duration-300 group-hover:opacity-0">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-emerald-300">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#eceef2]/95 via-[#eceef2]/50 to-transparent px-5 pt-14 pb-4 transition-opacity duration-300 group-hover:opacity-0">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-brand-600">
             {project.category}
           </p>
-          <h3 className="text-base font-bold text-white uppercase tracking-wide mt-1 line-clamp-1">
+          <h3 className="text-base font-bold text-zinc-900 uppercase tracking-wide mt-1 line-clamp-1">
             {project.title}
           </h3>
         </div>
 
         {/* Case-study ribbon for featured projects */}
         {project.featured && (
-          <span className="absolute top-6 -left-11 -rotate-45 z-20 bg-emerald-400 text-zinc-950 text-[10px] font-bold tracking-[0.2em] px-12 py-1 shadow-lg">
+          <span className="absolute top-6 -left-11 -rotate-45 z-20 bg-brand-600 text-white text-[10px] font-bold tracking-[0.2em] px-12 py-1 shadow-lg">
             CASE STUDY
           </span>
         )}
@@ -59,28 +59,28 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <span
           className={`absolute top-4 right-4 z-20 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
             project.status === "Live"
-              ? "bg-emerald-950/60 text-emerald-300 border border-emerald-400/30"
-              : "bg-blue-950/60 text-blue-300 border border-blue-400/30"
+              ? "bg-green-100 text-green-700 border border-green-600/20"
+              : "bg-blue-100 text-blue-700 border border-blue-600/20"
           }`}
         >
           {project.status}
         </span>
 
         {/* Hover overlay with centered details */}
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 bg-[#0a0a0f]/85 backdrop-blur-[3px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto transition-opacity duration-400">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-emerald-300 translate-y-3 group-hover:translate-y-0 transition-transform duration-400">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 bg-[#eceef2]/85 backdrop-blur-[3px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto transition-opacity duration-400">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-brand-600 translate-y-3 group-hover:translate-y-0 transition-transform duration-400">
             {project.category}
           </p>
-          <h3 className="text-xl font-bold text-white uppercase tracking-wide mt-2 translate-y-3 group-hover:translate-y-0 transition-transform duration-400">
+          <h3 className="text-xl font-bold text-zinc-900 uppercase tracking-wide mt-2 translate-y-3 group-hover:translate-y-0 transition-transform duration-400">
             {project.title}
           </h3>
-          <p className="text-sm text-zinc-400 mt-3 line-clamp-2 max-w-xs translate-y-3 group-hover:translate-y-0 transition-transform duration-400 delay-75">
+          <p className="text-sm text-slate-600 mt-3 line-clamp-2 max-w-xs translate-y-3 group-hover:translate-y-0 transition-transform duration-400 delay-75">
             {project.shortDesc}
           </p>
           <div className="flex items-center gap-3 mt-6 translate-y-3 group-hover:translate-y-0 transition-transform duration-400 delay-100">
             <Link
               href={`/projects/${project.id}`}
-              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-emerald-400/60 text-sm font-medium text-emerald-300 hover:bg-emerald-400 hover:text-zinc-950 transition-all duration-300"
+              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-brand-200 text-sm font-medium text-brand-600 hover:bg-brand-600 hover:text-white transition-all duration-300"
             >
               View Project
               <ArrowUpRight size={15} />
@@ -90,7 +90,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-full border border-white/15 text-zinc-400 hover:text-white hover:bg-white/10 transition-all"
+                className="p-2.5 rounded-full border border-slate-900/15 text-slate-600 hover:text-zinc-900 hover:bg-brand-700/10 transition-all"
                 title="Live Demo"
                 aria-label={`${project.title} live demo`}
               >

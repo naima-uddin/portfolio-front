@@ -242,17 +242,20 @@ const SkillsPlayground = () => {
   }, [started, reducedMotion]);
 
   return (
-    <section id="skills" className="scroll-mt-16 relative bg-[#0a0a0f] py-28 border-t border-white/5 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="skills" className="scroll-mt-16 relative bg-[#0d1117] py-28 overflow-hidden">
+      {/* GitHub-dark backdrop: dot grid + soft green glow */}
+      <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[500px] glow-navy" />
+      <div className="relative max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <span className="font-mono text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-[0.25em]">
+          <span className="inline-block px-3 py-1 rounded-full border border-brand-500/40 bg-brand-500/10 font-mono text-xs sm:text-sm font-bold text-brand-400 uppercase tracking-[0.25em]">
             Tech Stack
           </span>
           <h2 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
             My <span className="text-shimmer">Skills</span>
           </h2>
           {!reducedMotion && (
-            <p className="mt-4 text-sm text-zinc-500 font-mono">
+            <p className="mt-4 text-sm text-[#8b949e] font-mono">
               ✦ grab a bubble and throw it around
             </p>
           )}
@@ -264,10 +267,10 @@ const SkillsPlayground = () => {
             {TECHS.map(({ name, Icon, color }) => (
               <div
                 key={name}
-                className="flex items-center gap-2.5 px-5 py-3 rounded-full glass"
+                className="flex items-center gap-2.5 px-5 py-3 rounded-full gh-card"
               >
                 <Icon size={20} style={{ color }} />
-                <span className="font-mono text-xs uppercase tracking-wide text-zinc-300">
+                <span className="font-mono text-xs uppercase tracking-wide text-[#c9d1d9]">
                   {name}
                 </span>
               </div>
@@ -276,7 +279,7 @@ const SkillsPlayground = () => {
         ) : (
           <div
             ref={containerRef}
-            className="relative h-[280px] sm:h-[320px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing"
+            className="relative h-[280px] sm:h-[320px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-3xl border border-[#30363d] bg-[#010409]/60"
           >
             {TECHS.map(({ name, Icon, color }, i) => (
               <div
@@ -284,14 +287,14 @@ const SkillsPlayground = () => {
                 ref={(el) => {
                   chipRefs.current[i] = el;
                 }}
-                className="absolute top-0 left-0 w-[68px] h-[68px] sm:w-[88px] sm:h-[88px] rounded-full glass flex flex-col items-center justify-center gap-1 will-change-transform"
+                className="absolute top-0 left-0 w-[68px] h-[68px] sm:w-[88px] sm:h-[88px] rounded-full gh-card flex flex-col items-center justify-center gap-1 will-change-transform"
                 style={{
                   transform: "translate(-200px, -200px)",
-                  boxShadow: `0 0 24px ${color}22, inset 0 0 12px ${color}11`,
+                  boxShadow: `0 0 20px ${color}26, inset 0 0 14px ${color}14`,
                 }}
               >
                 <Icon className="text-xl sm:text-[26px]" style={{ color }} />
-                <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-wide text-zinc-400">
+                <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-wide text-[#8b949e]">
                   {name}
                 </span>
               </div>

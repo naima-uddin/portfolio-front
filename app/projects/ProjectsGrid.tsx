@@ -30,8 +30,8 @@ const ProjectsGrid = ({ projects }: { projects: Project[] }) => {
             onClick={() => setFilter(category)}
             className={`px-5 py-2 rounded-full font-mono text-xs uppercase tracking-wider font-semibold border transition-all duration-300 ${
               filter === category
-                ? "bg-emerald-400 border-emerald-400 text-zinc-950"
-                : "border-white/15 text-zinc-400 hover:border-emerald-400/60 hover:text-emerald-300"
+                ? "bg-brand-600 border-brand-600 text-white"
+                : "border-slate-900/15 text-slate-600 hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all hover:text-brand-600"
             }`}
           >
             {category === "all" ? "All Projects" : category}
@@ -53,7 +53,7 @@ const ProjectsGrid = ({ projects }: { projects: Project[] }) => {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-center text-zinc-500 py-16">
+        <p className="text-center text-slate-500 py-16">
           No projects in this category yet.
         </p>
       )}

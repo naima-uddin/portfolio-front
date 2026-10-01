@@ -18,13 +18,13 @@ interface GithubData {
   days: ContributionDay[];
 }
 
-// Heatmap cell colors by contribution level (dark → bright emerald)
+// Heatmap cell colors by contribution level (GitHub greens)
 const LEVEL_COLORS = [
-  "rgba(255,255,255,0.06)",
-  "rgba(52,211,153,0.25)",
-  "rgba(52,211,153,0.45)",
-  "rgba(52,211,153,0.7)",
-  "#34d399",
+  "#ebedf0",
+  "#9be9a8",
+  "#40c463",
+  "#30a14e",
+  "#216e39",
 ];
 
 async function getGithubData(): Promise<GithubData | null> {
@@ -93,16 +93,16 @@ const GithubContributions = async () => {
     : [];
 
   return (
-    <section className="relative bg-[#0a0a0f] py-28 border-t border-white/5">
+    <section className="relative bg-[#eceef2] py-28 border-t border-slate-900/5">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
             <div>
-              <p className="font-mono text-sm text-emerald-400 mb-3">GitHub</p>
-              <h2 className="text-3xl lg:text-5xl font-bold text-white tracking-tight">
+              <p className="font-mono text-sm font-semibold text-brand-600 mb-3">GitHub</p>
+              <h2 className="text-3xl lg:text-5xl font-bold text-zinc-900 tracking-tight">
                 Code &amp; <span className="text-gradient">Contributions</span>
               </h2>
-              <p className="mt-4 text-zinc-400">
+              <p className="mt-4 text-slate-600">
                 Contribution activity on GitHub
               </p>
             </div>
@@ -110,7 +110,7 @@ const GithubContributions = async () => {
               href={siteConfig.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full glass text-zinc-200 text-sm font-medium hover:bg-white/10 transition-all duration-300"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full surface text-zinc-800 text-sm font-medium hover:bg-brand-700/10 transition-all duration-300"
             >
               <Github size={17} />@{username}
               <ArrowUpRight
@@ -125,7 +125,7 @@ const GithubContributions = async () => {
           <>
             {/* Heatmap */}
             <Reveal>
-              <div className="glass rounded-3xl p-6 sm:p-8">
+              <div className="surface rounded-3xl p-6 sm:p-8">
                 <div className="overflow-x-auto pb-2">
                   <div className="flex gap-[3px] w-max">
                     {weeks.map((week, wi) => (
@@ -144,14 +144,14 @@ const GithubContributions = async () => {
                     ))}
                   </div>
                 </div>
-                <div className="flex flex-wrap items-center justify-between gap-3 mt-5 pt-5 border-t border-white/5">
-                  <p className="text-sm text-zinc-300">
-                    <span className="font-bold text-emerald-300">
+                <div className="flex flex-wrap items-center justify-between gap-3 mt-5 pt-5 border-t border-slate-900/5">
+                  <p className="text-sm text-slate-700">
+                    <span className="font-bold text-brand-600">
                       {data.totalContributions.toLocaleString()}
                     </span>{" "}
                     contributions in the last year
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500">
                     Less
                     {LEVEL_COLORS.map((color) => (
                       <span
@@ -170,15 +170,15 @@ const GithubContributions = async () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
               {stats.map((stat, i) => (
                 <Reveal key={stat.label} delay={i * 80}>
-                  <div className="glass rounded-2xl p-6 flex items-center gap-4 hover:border-emerald-400/25 transition-colors duration-300">
-                    <div className="w-11 h-11 rounded-xl bg-emerald-400/10 text-emerald-300 flex items-center justify-center flex-shrink-0">
+                  <div className="surface rounded-2xl p-6 flex items-center gap-4 hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
+                    <div className="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center flex-shrink-0">
                       {stat.icon}
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-white">
+                      <p className="text-2xl font-bold text-zinc-900">
                         {stat.value.toLocaleString()}
                       </p>
-                      <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">
+                      <p className="text-xs font-mono uppercase tracking-wider text-slate-500">
                         {stat.label}
                       </p>
                     </div>
@@ -190,8 +190,8 @@ const GithubContributions = async () => {
         ) : (
           // Fallback when GitHub APIs are unreachable at render time
           <Reveal>
-            <div className="glass rounded-3xl p-10 text-center">
-              <p className="text-zinc-400">
+            <div className="surface rounded-3xl p-10 text-center">
+              <p className="text-slate-600">
                 Couldn&apos;t load GitHub activity right now — check out my
                 profile directly.
               </p>

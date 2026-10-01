@@ -33,7 +33,7 @@ const Hero = ({
         {/* Text */}
         <div className="relative z-10 text-center lg:text-left">
           <h1 className="animate-slide-up text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl">
-            Hello I&apos;m <span className="text-slate-600">{config.firstName}</span>
+            Hello I&apos;m <span className="text-brand-600">{config.firstName}</span>
           </h1>
           <p
             className="animate-slide-up mt-4 text-3xl font-bold text-white sm:text-4xl [text-shadow:0_2px_12px_rgba(71,85,105,0.35)]"
@@ -53,7 +53,7 @@ const Hero = ({
           >
             <Link
               href="/projects"
-              className="rounded-md bg-slate-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-600/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-700"
+              className="rounded-md bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-600/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-700"
             >
               View Projects
             </Link>

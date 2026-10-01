@@ -7,28 +7,28 @@ const Footer = ({ config = siteConfig }: { config?: SiteConfig }) => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#0a0a0f] border-t border-white/5 overflow-hidden">
+    <footer className="relative bg-[#0d1117] border-t border-[#30363d] overflow-hidden">
       {/* Big CTA */}
       <div className="relative max-w-6xl mx-auto px-6 py-28">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] glow-emerald" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] glow-navy" />
         <Reveal>
           <div className="relative text-center">
-            <p className="font-mono text-sm text-emerald-400 mb-4">
+            <p className="font-mono text-sm font-semibold text-brand-400 mb-4">
               04 — Contact
             </p>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
               Have a project in mind?
               <br />
-              <span className="text-gradient">Let&apos;s build it together.</span>
+              <span className="text-brand-300">Let&apos;s build it together.</span>
             </h2>
-            <p className="mt-6 text-lg text-zinc-400 max-w-xl mx-auto">
+            <p className="mt-6 text-lg text-[#8b949e] max-w-xl mx-auto">
               I&apos;m always open to discussing new projects, creative ideas,
               or opportunities to be part of your vision.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-emerald-400 text-zinc-950 font-semibold hover:bg-emerald-300 transition-all duration-300 hover:shadow-[0_0_30px_rgba(52,211,153,0.35)]"
+                className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-400 transition-all duration-300 hover:shadow-lg shadow-brand-500/30"
               >
                 Get in touch
                 <ArrowUpRight
@@ -38,7 +38,7 @@ const Footer = ({ config = siteConfig }: { config?: SiteConfig }) => {
               </Link>
               <a
                 href={`mailto:${config.email}`}
-                className="inline-flex items-center px-8 py-4 rounded-full glass text-zinc-200 font-medium hover:bg-white/10 transition-all duration-300 font-mono text-sm"
+                className="inline-flex items-center px-8 py-4 rounded-full gh-card text-[#c9d1d9] font-medium hover:bg-white/10 transition-all duration-300 font-mono text-sm"
               >
                 {config.email}
               </a>
@@ -48,9 +48,9 @@ const Footer = ({ config = siteConfig }: { config?: SiteConfig }) => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/5">
+      <div className="border-t border-[#30363d]">
         <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-5">
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-[#8b949e]">
             © {year} {config.name}. Built with Next.js & Tailwind CSS.
           </p>
           <div className="flex items-center gap-1">
@@ -66,7 +66,7 @@ const Footer = ({ config = siteConfig }: { config?: SiteConfig }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="p-2.5 rounded-full text-zinc-500 hover:text-emerald-300 hover:bg-white/5 transition-all duration-300"
+                className="p-2.5 rounded-full text-[#8b949e] hover:text-brand-400 hover:bg-white/5 transition-all duration-300"
               >
                 {social.icon}
               </a>

@@ -20,7 +20,7 @@ interface Status {
 }
 
 const inputClasses =
-  "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-zinc-100 placeholder-zinc-600 outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300";
+  "w-full bg-slate-900/5 border border-slate-900/10 rounded-xl px-4 py-3 text-zinc-800 placeholder-slate-400 outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-500/15 transition-all duration-300";
 
 // Rotating circular text badge (weblance-style accent)
 const CIRCLE_TEXT = "LET'S WORK TOGETHER • LET'S WORK TOGETHER • ";
@@ -98,14 +98,14 @@ const ContactSection = ({
       className={`relative overflow-hidden ${
         standalone
           ? "pt-36 pb-24"
-          : "bg-[#0a0a0f] py-28 border-t border-white/5"
+          : "bg-[#eceef2] py-28 border-t border-slate-900/5"
       }`}
     >
       {standalone && (
         <>
           <div className="absolute inset-0 bg-grid" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] glow-emerald" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a0f]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#eceef2]" />
         </>
       )}
 
@@ -116,14 +116,14 @@ const ContactSection = ({
             className="animate-slide-in-left"
             style={{ animationDelay: "150ms" }}
           >
-            <p className="font-mono text-sm text-emerald-400 mb-4">
+            <p className="font-mono text-sm font-semibold text-brand-600 mb-4">
               Contact Me Today!
             </p>
-            <Heading className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.08]">
+            <Heading className="text-4xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 tracking-tight leading-[1.08]">
               Let&apos;s work together create something{" "}
               <span className="text-gradient">amazing</span>
             </Heading>
-            <p className="mt-6 text-lg text-zinc-400 max-w-xl leading-relaxed">
+            <p className="mt-6 text-lg text-slate-600 max-w-xl leading-relaxed">
               Whether you have a project in mind or just want to connect, feel
               free to reach out and let&apos;s start the conversation.
             </p>
@@ -144,7 +144,7 @@ const ContactSection = ({
                 </svg>
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full bg-emerald-400/10 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
+                <div className="w-14 h-14 rounded-full bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-600">
                   <ArrowDownRight size={22} />
                 </div>
               </div>
@@ -172,9 +172,9 @@ const ContactSection = ({
                   <a
                     key={item.value}
                     href={item.href}
-                    className="flex items-center gap-3 text-sm text-zinc-400 hover:text-emerald-300 transition-colors w-fit"
+                    className="flex items-center gap-3 text-sm text-slate-600 hover:text-brand-600 transition-colors w-fit"
                   >
-                    <span className="w-9 h-9 rounded-xl bg-emerald-400/10 text-emerald-300 flex items-center justify-center flex-shrink-0">
+                    <span className="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center flex-shrink-0">
                       {item.icon}
                     </span>
                     {item.value}
@@ -182,9 +182,9 @@ const ContactSection = ({
                 ) : (
                   <p
                     key={item.value}
-                    className="flex items-center gap-3 text-sm text-zinc-400"
+                    className="flex items-center gap-3 text-sm text-slate-600"
                   >
-                    <span className="w-9 h-9 rounded-xl bg-emerald-400/10 text-emerald-300 flex items-center justify-center flex-shrink-0">
+                    <span className="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center flex-shrink-0">
                       {item.icon}
                     </span>
                     {item.value}
@@ -201,7 +201,7 @@ const ContactSection = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className="w-10 h-10 rounded-xl bg-white/5 text-zinc-300 flex items-center justify-center hover:bg-white/10 hover:text-emerald-300 transition-all"
+                  className="w-10 h-10 rounded-xl bg-slate-900/5 text-slate-700 flex items-center justify-center hover:bg-brand-700/10 hover:text-brand-600 transition-all"
                 >
                   <Github size={17} />
                 </a>
@@ -210,17 +210,17 @@ const ContactSection = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="w-10 h-10 rounded-xl bg-white/5 text-zinc-300 flex items-center justify-center hover:bg-white/10 hover:text-emerald-300 transition-all"
+                  className="w-10 h-10 rounded-xl bg-slate-900/5 text-slate-700 flex items-center justify-center hover:bg-brand-700/10 hover:text-brand-600 transition-all"
                 >
                   <Linkedin size={17} />
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
                 <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-600 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-600" />
                 </span>
-                <p className="text-sm text-zinc-400">{config.availability}</p>
+                <p className="text-sm text-slate-600">{config.availability}</p>
               </div>
             </div>
           </div>
@@ -230,11 +230,11 @@ const ContactSection = ({
             className="animate-slide-in-right"
             style={{ animationDelay: "300ms" }}
           >
-            <div className="gradient-border gradient-border-always glass rounded-3xl p-8 sm:p-10">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            <div className="gradient-border gradient-border-always surface rounded-3xl p-8 sm:p-10">
+              <h3 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight">
                 Get in Touch
               </h3>
-              <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
                 Fill out the form below to connect with me. I&apos;ll get back
                 to you soon to discuss your project or answer any questions.
               </p>
@@ -296,7 +296,7 @@ const ContactSection = ({
                 <button
                   type="submit"
                   disabled={status.submitting}
-                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-emerald-400 text-zinc-950 font-semibold hover:bg-emerald-300 transition-all duration-300 hover:shadow-[0_0_30px_rgba(52,211,153,0.35)] disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-all duration-300 hover:shadow-lg shadow-brand-600/25 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {status.submitting ? (
                     <>
@@ -318,7 +318,7 @@ const ContactSection = ({
                   <p
                     role="status"
                     className={`text-sm ${
-                      status.info.error ? "text-red-400" : "text-emerald-300"
+                      status.info.error ? "text-red-400" : "text-brand-600"
                     }`}
                   >
                     {status.info.msg}

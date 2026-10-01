@@ -18,8 +18,8 @@ const SectionHeading = ({
   title: string;
 }) => (
   <div className="mb-14">
-    <p className="font-mono text-sm text-emerald-400 mb-3">{eyebrow}</p>
-    <h2 className="text-3xl lg:text-5xl font-bold text-white tracking-tight">
+    <p className="font-mono text-sm font-semibold text-brand-600 mb-3">{eyebrow}</p>
+    <h2 className="text-3xl lg:text-5xl font-bold text-zinc-900 tracking-tight">
       {title}
     </h2>
   </div>
@@ -35,7 +35,7 @@ const AboutSection = ({
   skills?: Skills;
 }) => {
   return (
-    <section id="about" className="scroll-mt-16 relative bg-[#0a0a0f] py-28">
+    <section id="about" className="scroll-mt-16 relative bg-[#eceef2] py-28">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <SectionHeading eyebrow="01 — About" title="Who I am" />
@@ -44,21 +44,21 @@ const AboutSection = ({
         <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10">
           {/* Bio */}
           <Reveal>
-            <div className="space-y-5 text-lg text-zinc-400 leading-relaxed">
+            <div className="space-y-5 text-lg text-slate-600 leading-relaxed">
               <p>{config.summary}</p>
               <p>
                 I&apos;ve built production systems ranging from{" "}
-                <span className="text-zinc-200">
+                <span className="text-zinc-800">
                   government approval platforms
                 </span>{" "}
-                and <span className="text-zinc-200">trading dashboards</span>{" "}
-                to <span className="text-zinc-200">learning platforms</span>{" "}
+                and <span className="text-zinc-800">trading dashboards</span>{" "}
+                to <span className="text-zinc-800">learning platforms</span>{" "}
                 with video streaming — always with a strong problem-solving
                 mindset and clean code practices.
               </p>
               <Link
                 href="/about"
-                className="group inline-flex items-center gap-2 text-emerald-300 font-medium hover:text-emerald-200 transition-colors"
+                className="group inline-flex items-center gap-2 text-brand-600 font-medium hover:text-zinc-950 transition-colors"
               >
                 More about me
                 <ArrowRight
@@ -92,15 +92,15 @@ const AboutSection = ({
               },
             ].map((item, i) => (
               <Reveal key={item.label} delay={i * 100}>
-                <div className="glass rounded-2xl p-5 flex items-center gap-4 hover:border-emerald-400/25 transition-colors duration-300">
-                  <div className="w-11 h-11 rounded-xl bg-emerald-400/10 text-emerald-300 flex items-center justify-center flex-shrink-0">
+                <div className="surface rounded-2xl p-5 flex items-center gap-4 hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
+                  <div className="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center flex-shrink-0">
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-xs font-mono uppercase tracking-wider text-zinc-500">
+                    <p className="text-xs font-mono uppercase tracking-wider text-slate-500">
                       {item.label}
                     </p>
-                    <p className="text-sm font-medium text-zinc-200 mt-0.5">
+                    <p className="text-sm font-medium text-zinc-800 mt-0.5">
                       {item.value}
                     </p>
                   </div>
@@ -121,15 +121,15 @@ const AboutSection = ({
             ] as [string, string[]][]
           ).map(([group, list], i) => (
             <Reveal key={group} delay={i * 100}>
-              <div className="glass rounded-2xl p-6 h-full hover:border-emerald-400/25 transition-colors duration-300">
-                <h3 className="font-mono text-sm text-emerald-400 mb-4">
+              <div className="surface rounded-2xl p-6 h-full hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
+                <h3 className="font-mono text-sm font-semibold text-brand-600 mb-4">
                   {group}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {list.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-zinc-300"
+                      className="px-3 py-1 rounded-full bg-slate-900/5 border border-slate-900/10 text-xs text-slate-700"
                     >
                       {skill}
                     </span>
