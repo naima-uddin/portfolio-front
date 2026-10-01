@@ -27,7 +27,7 @@ export default async function ProjectsPage() {
               className="animate-slide-up text-4xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 tracking-tight"
               style={{ animationDelay: "100ms" }}
             >
-              Projects I&apos;ve <span className="text-gradient">built.</span>
+              Projects I&apos;ve <span className="heading-accent heading-accent-load text-gradient">built.</span>
             </h1>
             <p
               className="animate-slide-up mt-5 text-lg text-slate-600 max-w-2xl"

@@ -26,6 +26,8 @@ import {
 import { GiBearFace } from "react-icons/gi";
 import { LuServer, LuCodeXml } from "react-icons/lu";
 import { marqueeSkills as defaultExtraSkills } from "@/lib/data";
+import Reveal from "./Reveal";
+import { stagger } from "@/lib/utils";
 
 interface Tech {
   name: string;
@@ -314,16 +316,16 @@ const SkillsPlayground = ({
   return (
     <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] pt-0 pb-8 lg:pb-10 overflow-hidden">
       <div className="relative mx-auto w-full max-w-7xl px-6">
-        <div className="text-center mb-3">
-          <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
-            My <span className="text-brand-600">Skills</span>
+        <Reveal className="text-center mb-3">
+          <h2 className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight" style={stagger(0)}>
+            My <span className="heading-accent text-brand-600">Skills</span>
           </h2>
           {!reducedMotion && (
-            <p className="mt-1 text-xs text-slate-500 font-mono">
+            <p className="reveal-item mt-1 text-xs text-slate-500 font-mono" style={stagger(1)}>
               ✦ grab a bubble and throw it around
             </p>
           )}
-        </div>
+        </Reveal>
 
         {reducedMotion ? (
           // Static fallback when the user prefers reduced motion

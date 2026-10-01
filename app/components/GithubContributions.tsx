@@ -7,6 +7,7 @@ import {
   Zap,
 } from "lucide-react";
 import Reveal from "./Reveal";
+import { stagger } from "@/lib/utils";
 import { siteConfig } from "@/lib/data";
 
 const username = siteConfig.github.split("/").filter(Boolean).pop() ?? "";
@@ -136,9 +137,9 @@ const GithubContributions = async () => {
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 mb-4">
-            <div>
+            <div className="reveal-item" style={stagger(0)}>
               <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
-                Code &amp; <span className="text-brand-600">contributions</span>
+                Code &amp; <span className="heading-accent text-brand-600">contributions</span>
               </h2>
               <p className="mt-1 text-xs text-slate-500 font-mono">
                 {"// consistency isn't a goal — it's the default."}
@@ -148,7 +149,8 @@ const GithubContributions = async () => {
               href={siteConfig.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 border border-zinc-900 px-5 py-2.5 font-mono text-sm font-bold text-zinc-900 transition-colors duration-300 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
+              style={stagger(1)}
+              className="reveal-item group inline-flex items-center gap-2 border border-zinc-900 px-5 py-2.5 font-mono text-sm font-bold text-zinc-900 transition-colors duration-300 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
             >
               <Github size={16} />
               @{username}
@@ -190,7 +192,7 @@ const GithubContributions = async () => {
               <div className="relative p-4 sm:p-5">
                 {/* Command + headline number */}
                 <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-                  <div>
+                  <div className="reveal-item" style={stagger(0)}>
                     <p className="font-mono text-[11px] sm:text-xs text-zinc-500">
                       <span className="text-brand-400">❯</span> git log --author=
                       <span className="text-amber-300">&quot;{username}&quot;</span> --since=
@@ -206,7 +208,7 @@ const GithubContributions = async () => {
                       </span>
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-2 rounded-md border border-brand-500/40 bg-brand-500/10 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand-400">
+                  <span style={stagger(1)} className="reveal-item inline-flex items-center gap-2 rounded-md border border-brand-500/40 bg-brand-500/10 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand-400">
                     <Flame size={13} />
                     Always shipping
                   </span>
@@ -224,7 +226,7 @@ const GithubContributions = async () => {
                     </div>
                     <div className="flex gap-[3px]">
                       {weeks.map((week, wi) => (
-                        <div key={wi} className="flex flex-col gap-[3px]">
+                        <div key={wi} className="reveal-cell flex flex-col gap-[3px]" style={stagger(wi)}>
                           {week.map((day) => (
                             <div
                               key={day.date}
@@ -247,10 +249,11 @@ const GithubContributions = async () => {
 
                 {/* Streak highlights + legend */}
                 <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-[#30363d] pt-3">
-                  {highlights.map((h) => (
+                  {highlights.map((h, i) => (
                     <div
                       key={h.label}
-                      className="group inline-flex items-center gap-2 rounded-lg border border-[#30363d] bg-[#161b22]/70 px-3 py-1.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-500/60 hover:shadow-md hover:shadow-brand-500/10"
+                      style={stagger(10 + i)}
+                      className="reveal-item group inline-flex items-center gap-2 rounded-lg border border-[#30363d] bg-[#161b22]/70 px-3 py-1.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-500/60 hover:shadow-md hover:shadow-brand-500/10"
                     >
                       <span className="text-brand-400 transition-transform duration-300 group-hover:scale-125">
                         {h.icon}

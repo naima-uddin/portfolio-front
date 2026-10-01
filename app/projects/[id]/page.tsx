@@ -19,6 +19,7 @@ import {
   Zap,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import { stagger } from "@/lib/utils";
 import Footer from "@/components/Footer";
 import { getProjectById, getProjects } from "@/lib/projectService";
 import { getSiteContent } from "@/lib/siteContentService";
@@ -205,7 +206,7 @@ export default async function ProjectDetailPage({
           {gallery.length > 0 && (
             <Reveal>
               <section className="mb-20">
-                <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 mb-7 flex items-center gap-3">
+                <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7 flex items-center gap-3">
                   <Images size={24} style={{ color: project.color }} />
                   Screenshots
                 </h2>
@@ -216,7 +217,8 @@ export default async function ProjectDetailPage({
                       href={src}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative aspect-video rounded-2xl overflow-hidden surface block"
+                      style={stagger(1 + i)}
+                      className="reveal-item group relative aspect-video rounded-2xl overflow-hidden surface block"
                     >
                       <Image
                         src={src}
@@ -238,15 +240,16 @@ export default async function ProjectDetailPage({
               {/* Features */}
               <Reveal>
                 <section>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 mb-7 flex items-center gap-3">
+                  <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7 flex items-center gap-3">
                     <Star size={24} style={{ color: project.color }} />
                     Key Features
                   </h2>
                   <div className="grid md:grid-cols-2 gap-4">
-                    {project.keyFeatures.map((feature) => (
+                    {project.keyFeatures.map((feature, i) => (
                       <div
                         key={feature}
-                        className="flex items-start gap-3 p-4 surface rounded-2xl"
+                        style={stagger(1 + i)}
+                        className="reveal-item flex items-start gap-3 p-4 surface rounded-2xl"
                       >
                         <CheckCircle
                           className="w-5 h-5 mt-0.5 flex-shrink-0"
@@ -265,11 +268,11 @@ export default async function ProjectDetailPage({
               {project.challenges && project.solutions && (
                 <Reveal>
                   <section>
-                    <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 mb-7">
+                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7">
                       Challenges & Solutions
                     </h2>
                     <div className="grid md:grid-cols-2 gap-6">
-                      <div className="surface rounded-2xl p-6">
+                      <div className="reveal-item surface rounded-2xl p-6" style={stagger(1)}>
                         <h3 className="font-mono text-sm text-red-400 mb-4">
                           The challenges
                         </h3>
@@ -285,7 +288,7 @@ export default async function ProjectDetailPage({
                           ))}
                         </ul>
                       </div>
-                      <div className="surface rounded-2xl p-6">
+                      <div className="reveal-item surface rounded-2xl p-6" style={stagger(2)}>
                         <h3 className="font-mono text-sm font-semibold text-brand-600 mb-4">
                           How I solved them
                         </h3>
@@ -312,14 +315,15 @@ export default async function ProjectDetailPage({
               {project.learnings && (
                 <Reveal>
                   <section>
-                    <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 mb-7">
+                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7">
                       What I learned
                     </h2>
                     <div className="flex flex-wrap gap-3">
-                      {project.learnings.map((learning) => (
+                      {project.learnings.map((learning, i) => (
                         <span
                           key={learning}
-                          className="px-4 py-2 rounded-full surface text-sm text-slate-700"
+                          style={stagger(1 + i)}
+                          className="reveal-item px-4 py-2 rounded-full surface text-sm text-slate-700"
                         >
                           {learning}
                         </span>
@@ -370,10 +374,11 @@ export default async function ProjectDetailPage({
                     Highlights
                   </h3>
                   <ul className="space-y-2.5">
-                    {project.highlights.map((highlight) => (
+                    {project.highlights.map((highlight, i) => (
                       <li
                         key={highlight}
-                        className="flex items-center gap-2.5 text-sm text-slate-600"
+                        style={stagger(1 + i)}
+                        className="reveal-item flex items-center gap-2.5 text-sm text-slate-600"
                       >
                         <span
                           className="w-1.5 h-1.5 rounded-full flex-shrink-0"

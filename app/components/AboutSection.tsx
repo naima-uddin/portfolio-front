@@ -10,6 +10,7 @@ import {
   Wrench,
 } from "lucide-react";
 import Reveal from "./Reveal";
+import { stagger } from "@/lib/utils";
 import {
   siteConfig,
   education as defaultEducation,
@@ -38,15 +39,17 @@ const SectionHeading = ({
 
 // One stop on the left panel's dotted timeline.
 const PanelItem = ({
+  index,
   icon,
   label,
   children,
 }: {
+  index: number;
   icon: React.ReactNode;
   label: string;
   children: React.ReactNode;
 }) => (
-  <div className="relative pl-11">
+  <div className="reveal-item relative pl-11" style={stagger(index)}>
     <span className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-white text-brand-600 ring-1 ring-brand-200">
       {icon}
     </span>
@@ -85,24 +88,26 @@ const AboutSection = ({
           <div className="grid overflow-hidden rounded-2xl bg-white ring-1 ring-slate-900/5 shadow-sm lg:grid-cols-[280px_1fr]">
             {/* Left: education panel */}
             <aside className="relative bg-[#f1f8f3] border-b lg:border-b-0 lg:border-r border-brand-100 px-6 py-8">
-              <h3 className="text-lg font-bold text-zinc-900">Education</h3>
+              <h3 className="reveal-item text-lg font-bold text-zinc-900" style={stagger(0)}>
+                Education
+              </h3>
 
               {/* Dotted timeline */}
               <div className="relative mt-5 space-y-5">
                 <div className="absolute left-[15px] top-2 bottom-2 border-l-2 border-dotted border-brand-200" />
-                <PanelItem icon={<GraduationCap size={15} />} label={education.period}>
+                <PanelItem index={1} icon={<GraduationCap size={15} />} label={education.period}>
                   <p className="font-semibold leading-snug">{education.degree}</p>
                   <p className="mt-0.5 text-xs text-slate-500">{education.institution}</p>
                   <span className="mt-1.5 inline-block rounded-full bg-white px-2.5 py-0.5 text-[11px] font-semibold text-brand-700 ring-1 ring-brand-200">
                     {education.result}
                   </span>
                 </PanelItem>
-                <PanelItem icon={<Briefcase size={15} />} label="Currently">
+                <PanelItem index={2} icon={<Briefcase size={15} />} label="Currently">
                   <p className="font-semibold leading-snug">
                     {title} @ {config.company}
                   </p>
                 </PanelItem>
-                <PanelItem icon={<MapPin size={15} />} label="Based in">
+                <PanelItem index={3} icon={<MapPin size={15} />} label="Based in">
                   <p className="font-semibold leading-snug">{config.location}</p>
                 </PanelItem>
               </div>
@@ -110,9 +115,9 @@ const AboutSection = ({
 
             {/* Right: about content */}
             <div className="px-6 py-8 sm:px-8">
-              <div className="flex flex-wrap items-end justify-between gap-3">
+              <div className="reveal-item flex flex-wrap items-end justify-between gap-3" style={stagger(1)}>
                 <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
-                  About <span className="text-brand-600">Me</span>
+                  About <span className="heading-accent text-brand-600">Me</span>
                 </h2>
                 <Link
                   href="/about"
@@ -126,12 +131,12 @@ const AboutSection = ({
                 </Link>
               </div>
 
-              <p className="mt-3 text-base text-slate-600">
+              <p className="reveal-item mt-3 text-base text-slate-600" style={stagger(2)}>
                 I&apos;m <span className="font-semibold text-zinc-900">{config.name},</span>{" "}
                 {title}
                 {rest.length > 0 && ` / ${rest.join(" / ")}`}
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+              <p className="reveal-item mt-2 text-sm leading-relaxed text-slate-500" style={stagger(3)}>
                 {config.summary}
               </p>
 
@@ -140,7 +145,8 @@ const AboutSection = ({
                 {stats.slice(0, 4).map((stat, i) => (
                   <div
                     key={stat.label}
-                    className={`px-3 py-4 text-center border-dotted border-slate-300 ${
+                    style={stagger(4 + i)}
+                    className={`reveal-item px-3 py-4 text-center border-dotted border-slate-300 ${
                       i > 0 ? "sm:border-l-2" : ""
                     } ${i % 2 === 1 ? "border-l-2" : ""} ${i < 2 ? "border-b-2 sm:border-b-0" : ""}`}
                   >
@@ -155,11 +161,13 @@ const AboutSection = ({
               </div>
 
               {/* What I do */}
-              <h3 className="mt-6 text-base font-bold text-zinc-900">What I Do?</h3>
+              <h3 className="reveal-item mt-6 text-base font-bold text-zinc-900" style={stagger(8)}>
+                What I Do?
+              </h3>
               <ul className="mt-3 grid gap-4 sm:grid-cols-2">
                 {WHAT_I_DO.filter(({ key }) => skills[key]?.length).map(
-                  ({ key, title: heading, icon }) => (
-                    <li key={key} className="flex items-start gap-3">
+                  ({ key, title: heading, icon }, i) => (
+                    <li key={key} className="reveal-item flex items-start gap-3" style={stagger(9 + i)}>
                       <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
                         {icon}
                       </span>

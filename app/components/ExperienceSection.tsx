@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
+import { stagger } from "@/lib/utils";
 import {
   siteConfig,
   experiences as defaultExperiences,
@@ -114,17 +115,20 @@ const IdCard = ({ config }: { config: SiteConfig }) => {
 const ExperienceColumn = ({
   heading,
   items,
+  offset,
 }: {
   heading: string;
   items: Experience[];
+  // Stagger start; columns interleave (col 1 = 1, 3, 5…, col 2 = 2, 4, 6…).
+  offset: number;
 }) => (
   <div>
-    <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-zinc-900">
+    <h3 className="reveal-item text-sm font-bold uppercase tracking-[0.12em] text-zinc-900" style={stagger(offset)}>
       {heading}
     </h3>
     <div className="mt-3 space-y-5">
-      {items.map((exp) => (
-        <div key={`${exp.company}-${exp.role}`}>
+      {items.map((exp, j) => (
+        <div key={`${exp.company}-${exp.role}`} className="reveal-item" style={stagger(offset + 1 + j * 2)}>
           <div className="flex flex-wrap items-center gap-2">
             <p className="text-sm font-semibold text-zinc-900">{exp.role}</p>
             {exp.current && (
@@ -187,17 +191,19 @@ const ExperienceSection = ({
         <Reveal>
           <div className="grid items-center gap-8 lg:grid-cols-[220px_1fr] lg:gap-12">
             {/* ID card hanging from its lanyard */}
-            <IdCard config={config} />
+            <div className="reveal-drop origin-top">
+              <IdCard config={config} />
+            </div>
 
             <div className="lg:pl-10">
-              <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
-                Where I&apos;ve <span className="text-brand-600">worked</span>
+              <h2 className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight" style={stagger(0)}>
+                Where I&apos;ve <span className="heading-accent text-brand-600">worked</span>
               </h2>
 
               <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-0 md:divide-x md:divide-slate-200">
                 {columns.map((col, i) => (
                   <div key={col.heading + i} className={i > 0 ? "md:pl-8" : "md:pr-8"}>
-                    <ExperienceColumn heading={col.heading} items={col.items} />
+                    <ExperienceColumn heading={col.heading} items={col.items} offset={1 + i} />
                   </div>
                 ))}
               </div>

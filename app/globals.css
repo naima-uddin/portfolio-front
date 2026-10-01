@@ -349,12 +349,19 @@
 
 /* ---------- Animation classes ---------- */
 
-.animate-fade-in { animation: fade-in 0.6s ease-out forwards; }
-.animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
-.animate-slide-down { animation: slide-down 0.5s ease-out forwards; }
-.animate-slide-in-left { animation: slide-in-left 0.6s ease-out forwards; }
-.animate-slide-in-right { animation: slide-in-right 0.6s ease-out forwards; }
-.animate-scale-in { animation: scale-in 0.5s ease-out forwards; }
+/* One easing + duration for every entrance on the site (page load and scroll). */
+:root {
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-duration: 0.8s;
+  --stagger-step: 80ms;
+}
+
+.animate-fade-in { animation: fade-in var(--reveal-duration) var(--ease-reveal) forwards; }
+.animate-slide-up { animation: slide-up var(--reveal-duration) var(--ease-reveal) forwards; }
+.animate-slide-down { animation: slide-down var(--reveal-duration) var(--ease-reveal) forwards; }
+.animate-slide-in-left { animation: slide-in-left var(--reveal-duration) var(--ease-reveal) forwards; }
+.animate-slide-in-right { animation: slide-in-right var(--reveal-duration) var(--ease-reveal) forwards; }
+.animate-scale-in { animation: scale-in var(--reveal-duration) var(--ease-reveal) forwards; }
 .animate-float-gentle { animation: float-gentle 6s ease-in-out infinite; }
 .animate-marquee { animation: marquee 30s linear infinite; }
 .animate-marquee-reverse { animation: marquee 36s linear infinite reverse; }
@@ -377,15 +384,90 @@
   opacity: 0;
 }
 
-/* Scroll reveal (driven by the Reveal component) */
+/* Scroll reveal (driven by the Reveal component).
+   The block fades/slides in, then its .reveal-item children follow in a
+   stagger (set --i per item), and any .heading-accent underline draws in. */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transform: translateY(32px);
+  filter: blur(4px);
+  transition:
+    opacity var(--reveal-duration) var(--ease-reveal),
+    transform var(--reveal-duration) var(--ease-reveal),
+    filter var(--reveal-duration) var(--ease-reveal);
 }
+.reveal[data-reveal="left"] { transform: translateX(-40px); }
+.reveal[data-reveal="right"] { transform: translateX(40px); }
+.reveal[data-reveal="scale"] { transform: scale(0.94); }
+.reveal[data-reveal="fade"] { transform: none; }
 .reveal.reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  filter: none;
+}
+
+@keyframes reveal-item {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes reveal-drop {
+  0% { opacity: 0; transform: translateY(-60px) rotate(-6deg); }
+  60% { opacity: 1; transform: translateY(6px) rotate(2deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes reveal-cell {
+  from { opacity: 0; transform: scale(0.3); }
+  to { opacity: 1; transform: none; }
+}
+
+.reveal-visible .reveal-item {
+  animation: reveal-item 0.7s var(--ease-reveal) both;
+  animation-delay: calc(150ms + var(--i, 0) * var(--stagger-step));
+}
+.reveal-visible .reveal-drop {
+  animation: reveal-drop 1.1s var(--ease-reveal) both;
+  animation-delay: 150ms;
+}
+.reveal-visible .reveal-cell {
+  animation: reveal-cell 0.5s var(--ease-reveal) both;
+  animation-delay: calc(250ms + var(--i, 0) * 14ms);
+}
+/* Defined after the visible rules so an inner Reveal that hasn't triggered
+   yet keeps its items hidden even when an outer Reveal is already visible. */
+.reveal:not(.reveal-visible) .reveal-item,
+.reveal:not(.reveal-visible) .reveal-drop,
+.reveal:not(.reveal-visible) .reveal-cell {
+  opacity: 0;
+}
+
+/* Accent word in section headings: underline draws in on reveal */
+.heading-accent {
+  position: relative;
+  display: inline-block;
+}
+.heading-accent::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.08em;
+  height: 0.12em;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--color-brand-600), var(--color-brand-300));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-reveal) 0.45s;
+}
+.reveal-visible .heading-accent::after,
+.heading-accent.heading-accent-load::after {
+  transform: scaleX(1);
+}
+.heading-accent.heading-accent-load::after {
+  animation: accent-draw 0.9s var(--ease-reveal) 0.6s both;
+}
+@keyframes accent-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 /* Pause marquee on hover */
@@ -396,14 +478,25 @@
 @media (max-width: 768px) {
   .animate-slide-in-left,
   .animate-slide-in-right {
-    animation: slide-up 0.6s ease-out forwards;
+    animation: slide-up var(--reveal-duration) var(--ease-reveal) forwards;
+  }
+  .reveal[data-reveal="left"],
+  .reveal[data-reveal="right"] {
+    transform: translateY(32px);
+  }
+  .reveal.reveal-visible[data-reveal] {
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-id-swing { animation: none; }
   .animate-marquee { animation-duration: 60s; }
-  .reveal { transition: none; opacity: 1; transform: none; }
+  .reveal { transition: none; opacity: 1; transform: none; filter: none; }
+  .reveal .reveal-item,
+  .reveal .reveal-drop,
+  .reveal .reveal-cell { animation: none !important; opacity: 1 !important; }
+  .heading-accent::after { transition: none; animation: none !important; transform: scaleX(1); }
 }
 
 /* ---------- Scrollbar ---------- */

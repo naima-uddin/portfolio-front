@@ -4,6 +4,8 @@ import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { ArrowRight, Github, Loader2, Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig, type SiteConfig } from "@/lib/data";
+import Reveal from "./Reveal";
+import { stagger } from "@/lib/utils";
 
 interface Status {
   submitting: boolean;
@@ -96,7 +98,7 @@ const ContactSection = ({
     >
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-12">
         {/* Left: business card */}
-        <div className="animate-slide-in-left flex justify-center" style={{ animationDelay: "100ms" }}>
+        <Reveal variant="left" className="flex justify-center">
           <div className="relative flex aspect-[1.75/1] w-full max-w-[500px] -rotate-2 lg:-rotate-4 flex-col justify-between overflow-hidden rounded-[18px] border border-zinc-900/10 bg-white p-5 sm:p-7 shadow-[0_30px_60px_-30px_rgba(15,23,42,0.45),0_2px_0_rgba(15,23,42,0.04)] transition-transform duration-500 ease-[cubic-bezier(.2,.8,.2,1)] hover:rotate-0 hover:scale-[1.02]">
             {/* Pixel mark */}
             <div
@@ -137,83 +139,82 @@ const ContactSection = ({
             {/* Green stripe along the bottom edge */}
             <span className="absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r from-brand-700 via-brand-400 to-brand-200" />
           </div>
-        </div>
+        </Reveal>
 
         {/* Right: minimal form */}
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          className="animate-slide-in-right"
-          style={{ animationDelay: "200ms" }}
-        >
-          <Heading
-            className={
-              standalone
-                ? "mb-5 text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-zinc-900"
-                : "mb-5 text-2xl lg:text-3xl font-bold tracking-tight text-zinc-900"
-            }
-          >
-            Got an idea? <span className="text-brand-600">Let&apos;s talk.</span>
-          </Heading>
-
-          <div className="grid gap-x-5 sm:grid-cols-2">
-            <input
-              type="text"
-              name="name"
-              aria-label="Your name"
-              placeholder="Your name"
-              className={fieldClasses}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              aria-label="Email address"
-              placeholder="Email address"
-              className={fieldClasses}
-              required
-            />
-          </div>
-          <textarea
-            name="message"
-            rows={2}
-            aria-label="Message"
-            placeholder="What's your project about?"
-            className={`${fieldClasses} resize-none`}
-            required
-          />
-
-          <div className="mt-5 flex flex-wrap items-center gap-4">
-            <button
-              type="submit"
-              disabled={status.submitting}
-              className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60"
+        <Reveal variant="right" delay={120}>
+          <form ref={formRef} onSubmit={handleSubmit}>
+            <Heading
+              style={stagger(0)}
+              className={`reveal-item ${
+                standalone
+                  ? "mb-5 text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-zinc-900"
+                  : "mb-5 text-2xl lg:text-3xl font-bold tracking-tight text-zinc-900"
+              }`}
             >
-              {status.submitting ? (
-                <>
-                  <Loader2 size={16} className="animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  Send message
-                  <ArrowRight
-                    size={16}
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                  />
-                </>
-              )}
-            </button>
-            {status.info.msg && (
-              <p
-                role="status"
-                className={`text-sm ${status.info.error ? "text-red-500" : "text-brand-600"}`}
+              Got an idea? <span className="heading-accent text-brand-600">Let&apos;s talk.</span>
+            </Heading>
+
+            <div className="reveal-item grid gap-x-5 sm:grid-cols-2" style={stagger(1)}>
+              <input
+                type="text"
+                name="name"
+                aria-label="Your name"
+                placeholder="Your name"
+                className={fieldClasses}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                aria-label="Email address"
+                placeholder="Email address"
+                className={fieldClasses}
+                required
+              />
+            </div>
+            <textarea
+              name="message"
+              rows={2}
+              aria-label="Message"
+              placeholder="What's your project about?"
+              className={`reveal-item ${fieldClasses} resize-none`}
+              style={stagger(2)}
+              required
+            />
+
+            <div className="reveal-item mt-5 flex flex-wrap items-center gap-4" style={stagger(3)}>
+              <button
+                type="submit"
+                disabled={status.submitting}
+                className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {status.info.msg}
-              </p>
-            )}
-          </div>
-        </form>
+                {status.submitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send message
+                    <ArrowRight
+                      size={16}
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    />
+                  </>
+                )}
+              </button>
+              {status.info.msg && (
+                <p
+                  role="status"
+                  className={`text-sm ${status.info.error ? "text-red-500" : "text-brand-600"}`}
+                >
+                  {status.info.msg}
+                </p>
+              )}
+            </div>
+          </form>
+        </Reveal>
       </div>
     </section>
   );

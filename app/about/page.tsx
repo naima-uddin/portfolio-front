@@ -13,6 +13,7 @@ import {
   Phone,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import { stagger } from "@/lib/utils";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsPlayground from "@/components/SkillsPlayground";
 import GithubContributions from "@/components/GithubContributions";
@@ -58,7 +59,7 @@ export default async function About() {
                 style={{ animationDelay: "100ms" }}
               >
                 Turning ideas into{" "}
-                <span className="text-gradient">fast, clean</span> web
+                <span className="heading-accent heading-accent-load text-gradient">fast, clean</span> web
                 experiences.
               </h1>
 
@@ -162,7 +163,7 @@ export default async function About() {
           <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
             {stats.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 80}>
-                <div className="surface rounded-2xl p-6 h-full text-center hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
+                <div className="surface rounded-2xl p-6 h-full text-center hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all duration-300">
                   <p className="text-3xl sm:text-4xl font-bold text-gradient">
                     {stat.value}
                   </p>
@@ -177,7 +178,7 @@ export default async function About() {
           {/* Facts bento: location, languages, quote */}
           <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Reveal>
-              <div className="surface rounded-2xl p-6 h-full hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
+              <div className="surface rounded-2xl p-6 h-full hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all duration-300">
                 <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
                   <MapPin size={18} />
                 </div>
@@ -191,7 +192,7 @@ export default async function About() {
             </Reveal>
 
             <Reveal delay={80}>
-              <div className="surface rounded-2xl p-6 h-full hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
+              <div className="surface rounded-2xl p-6 h-full hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all duration-300">
                 <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-4">
                   <Languages size={18} />
                 </div>
@@ -215,7 +216,7 @@ export default async function About() {
             </Reveal>
 
             <Reveal delay={160}>
-              <div className="surface rounded-2xl p-6 h-full flex flex-col justify-center hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300 sm:col-span-2 lg:col-span-1">
+              <div className="surface rounded-2xl p-6 h-full flex flex-col justify-center hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all duration-300 sm:col-span-2 lg:col-span-1">
                 <p className="text-lg text-zinc-800 font-medium leading-relaxed">
                   &ldquo;First, solve the problem. Then, write the code.&rdquo;
                 </p>
@@ -236,13 +237,13 @@ export default async function About() {
         <div className="max-w-6xl mx-auto px-6">
           <Reveal>
             <div className="max-w-2xl">
-              <p className="font-mono text-sm font-semibold text-brand-600 mb-3">
-                Education
-              </p>
-              <h2 className="text-3xl font-bold text-zinc-900 tracking-tight mb-8">
-                Where I studied
+              <h2
+                className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight mb-6"
+                style={stagger(0)}
+              >
+                Where I <span className="heading-accent text-brand-600">studied</span>
               </h2>
-              <div className="surface rounded-2xl p-7 hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all transition-colors duration-300">
+              <div style={stagger(1)} className="reveal-item surface rounded-2xl p-7 hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all duration-300">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center flex-shrink-0">
                     <GraduationCap size={22} />
