@@ -12,8 +12,9 @@ export function apiUrl(path: string): string {
 // revalidating. Keep modest so dashboard edits appear quickly.
 export const REVALIDATE_SECONDS = 60;
 
-// Client-side fetch to the backend. Always sends credentials so the session
-// cookie (set by the backend on login) travels with protected requests.
+// Client-side fetch to the backend. Uses a same-origin path that next.config
+// rewrites to the backend, so the session cookie lives on this domain.
 export function apiFetch(path: string, init?: RequestInit): Promise<Response> {
-  return fetch(apiUrl(path), { credentials: "include", ...init });
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return fetch(p, { credentials: "include", ...init });
 }

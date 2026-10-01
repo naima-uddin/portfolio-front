@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Loader2, Lock, LogIn } from "lucide-react";
 import { apiFetch } from "@/lib/api";
 
@@ -9,7 +8,6 @@ const inputClasses =
   "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-zinc-100 placeholder-zinc-600 outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300";
 
 export default function NaimasLogin() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -29,8 +27,8 @@ export default function NaimasLogin() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Login failed.");
       }
-      router.push("/admin");
-      router.refresh();
+      // Full navigation so middleware sees the freshly-set session cookie.
+      window.location.assign("/admin");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed.");
       setLoading(false);

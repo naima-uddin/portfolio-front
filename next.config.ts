@@ -30,6 +30,13 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   generateEtags: false,
 
+  // Proxy browser API calls through this domain so the backend's session
+  // cookie is set on the frontend's origin (where middleware can read it).
+  async rewrites() {
+    const backend = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000").replace(/\/$/, "");
+    return [{ source: "/api/:path*", destination: `${backend}/api/:path*` }];
+  },
+
   // Performance optimizations
   async headers() {
     return [
