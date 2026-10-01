@@ -100,6 +100,12 @@ const GithubContributions = async () => {
     const prev = wi > 0 ? new Date(`${weeks[wi - 1][0].date}T00:00:00`).getMonth() : -1;
     return month !== prev && wi < weeks.length - 2 ? MONTHS[month] : "";
   });
+  // Drop a label that would collide with the next one (e.g. a partial first month).
+  monthLabels.forEach((label, i) => {
+    if (!label) return;
+    const next = monthLabels.findIndex((l, j) => j > i && l);
+    if (next !== -1 && next - i < 3) monthLabels[i] = "";
+  });
 
   const insights = data ? getInsights(data.days) : null;
 
@@ -215,8 +221,10 @@ const GithubContributions = async () => {
                 </div>
 
                 {/* Heatmap */}
-                <div className="mt-4 overflow-x-auto pb-1 [scrollbar-width:thin]">
-                  <div className="w-max">
+                {/* RTL scroller starts at the right edge, so on narrow screens the
+                    latest weeks show first; mr-auto keeps it left-aligned when it fits. */}
+                <div className="mt-4 overflow-x-auto pb-1 [direction:rtl] [scrollbar-width:thin]">
+                  <div className="mr-auto w-max [direction:ltr]">
                     <div className="mb-1 flex gap-[3px] font-mono text-[10px] text-zinc-500">
                       {monthLabels.map((label, i) => (
                         <span key={i} className="w-[10px] overflow-visible whitespace-nowrap">

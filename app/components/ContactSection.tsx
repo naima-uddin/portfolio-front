@@ -93,7 +93,7 @@ const ContactSection = ({
     <section
       id="contact"
       className={`scroll-mt-16 relative overflow-hidden bg-[#eceef2] ${
-        standalone ? "pt-28 pb-12 lg:pt-32" : "py-10 lg:py-14"
+        standalone ? "pt-28 pb-12 sm:pt-32" : "py-10 lg:py-14"
       }`}
     >
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-12">

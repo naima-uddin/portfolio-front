@@ -19,16 +19,16 @@ const ProjectsGrid = ({ projects }: { projects: Project[] }) => {
 
   return (
     <>
-      {/* Filters */}
+      {/* One swipeable row on phones (bleeds to the screen edges), wrapping from sm up */}
       <div
-        className="animate-slide-up flex flex-wrap gap-2 mb-8"
+        className="animate-slide-up -mx-6 mb-6 flex gap-2 overflow-x-auto px-6 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0 sm:py-0"
         style={{ animationDelay: "320ms" }}
       >
         {categories.map((category) => (
           <button
             key={category}
             onClick={() => setFilter(category)}
-            className={`px-5 py-2 rounded-full font-mono text-xs uppercase tracking-wider font-semibold border transition-all duration-300 ${
+            className={`shrink-0 whitespace-nowrap px-4 py-2 sm:px-5 rounded-full font-mono text-xs uppercase tracking-wider font-semibold border transition-all duration-300 ${
               filter === category
                 ? "bg-brand-600 border-brand-600 text-white"
                 : "border-slate-900/15 text-slate-600 hover:border-brand-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-500/10 transition-all hover:text-brand-600"

@@ -314,7 +314,7 @@ const SkillsPlayground = ({
   }, [started, reducedMotion, techs]);
 
   return (
-    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] pt-0 pb-8 lg:pb-10 overflow-hidden">
+    <section id="skills" className="scroll-mt-20 relative bg-[#eceef2] pt-0 pb-8 lg:pb-10 overflow-hidden">
       <div className="relative mx-auto w-full max-w-7xl px-6">
         <Reveal className="text-center mb-3">
           <h2 className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight" style={stagger(0)}>

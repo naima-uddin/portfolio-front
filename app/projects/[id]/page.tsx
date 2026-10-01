@@ -81,7 +81,7 @@ export default async function ProjectDetailPage({
 
   return (
     <main className="bg-[#eceef2] min-h-screen">
-      <div className="relative pt-32 pb-20 overflow-hidden">
+      <div className="relative pt-28 pb-14 sm:pt-32 lg:pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-grid" />
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-20"
@@ -94,7 +94,7 @@ export default async function ProjectDetailPage({
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           <Link
             href="/projects"
-            className="animate-fade-in inline-flex items-center gap-2 text-sm text-slate-500 hover:text-brand-600 transition-colors mb-10"
+            className="animate-fade-in inline-flex items-center gap-2 text-sm text-slate-500 hover:text-brand-600 transition-colors mb-6 sm:mb-10"
           >
             <ArrowLeft size={16} />
             Back to projects
@@ -122,21 +122,21 @@ export default async function ProjectDetailPage({
             </div>
 
             <h1
-              className="animate-slide-up text-4xl lg:text-6xl font-bold tracking-tight text-zinc-900 leading-[1.1]"
+              className="animate-slide-up text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-zinc-900 leading-[1.1]"
               style={{ animationDelay: "100ms" }}
             >
               {project.title}
             </h1>
 
             <p
-              className="animate-slide-up mt-6 text-lg text-slate-600 max-w-3xl leading-relaxed"
+              className="animate-slide-up mt-4 sm:mt-6 text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed"
               style={{ animationDelay: "220ms" }}
             >
               {project.description}
             </p>
 
             <div
-              className="animate-slide-up flex flex-wrap gap-4 mt-9"
+              className="animate-slide-up flex flex-wrap gap-2.5 sm:gap-4 mt-7 sm:mt-9"
               style={{ animationDelay: "340ms" }}
             >
               {project.liveUrl !== "#" && (
@@ -144,7 +144,7 @@ export default async function ProjectDetailPage({
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-all duration-300 hover:shadow-lg shadow-brand-600/25"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm sm:px-7 sm:py-3.5 sm:text-base rounded-full bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-all duration-300 hover:shadow-lg shadow-brand-600/25"
                 >
                   <ExternalLink size={18} />
                   Live Demo
@@ -156,7 +156,7 @@ export default async function ProjectDetailPage({
                   href={repo.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm sm:px-6 sm:py-3.5 sm:text-base rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
                 >
                   <Github size={18} />
                   {repo.label}
@@ -164,7 +164,7 @@ export default async function ProjectDetailPage({
               ))}
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm sm:px-7 sm:py-3.5 sm:text-base rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
               >
                 Build something like this
               </Link>
@@ -173,7 +173,7 @@ export default async function ProjectDetailPage({
 
           {/* Cover */}
           <Reveal>
-            <div className="relative aspect-video rounded-3xl overflow-hidden surface mb-20">
+            <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden surface mb-12 lg:mb-20">
               {project.image ? (
                 <Image
                   src={project.image}
@@ -205,12 +205,12 @@ export default async function ProjectDetailPage({
           {/* Gallery */}
           {gallery.length > 0 && (
             <Reveal>
-              <section className="mb-20">
-                <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7 flex items-center gap-3">
+              <section className="mb-12 lg:mb-20">
+                <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7 flex items-center gap-3">
                   <Images size={24} style={{ color: project.color }} />
                   Screenshots
                 </h2>
-                <div className="grid sm:grid-cols-2 gap-5">
+                <div className="grid sm:grid-cols-2 gap-3 sm:gap-5">
                   {gallery.map((src, i) => (
                     <a
                       key={src}
@@ -236,11 +236,11 @@ export default async function ProjectDetailPage({
 
           {/* Content grid */}
           <div className="grid lg:grid-cols-[1fr_320px] gap-12">
-            <div className="space-y-16">
+            <div className="space-y-12 lg:space-y-16">
               {/* Features */}
               <Reveal>
                 <section>
-                  <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7 flex items-center gap-3">
+                  <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7 flex items-center gap-3">
                     <Star size={24} style={{ color: project.color }} />
                     Key Features
                   </h2>
@@ -268,10 +268,10 @@ export default async function ProjectDetailPage({
               {project.challenges && project.solutions && (
                 <Reveal>
                   <section>
-                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7">
+                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7">
                       Challenges & Solutions
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                       <div className="reveal-item surface rounded-2xl p-6" style={stagger(1)}>
                         <h3 className="font-mono text-sm text-red-400 mb-4">
                           The challenges
@@ -315,7 +315,7 @@ export default async function ProjectDetailPage({
               {project.learnings && (
                 <Reveal>
                   <section>
-                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-7">
+                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7">
                       What I learned
                     </h2>
                     <div className="flex flex-wrap gap-3">
@@ -323,7 +323,7 @@ export default async function ProjectDetailPage({
                         <span
                           key={learning}
                           style={stagger(1 + i)}
-                          className="reveal-item px-4 py-2 rounded-full surface text-sm text-slate-700"
+                          className="reveal-item px-4 py-2 rounded-2xl sm:rounded-full surface text-sm text-slate-700"
                         >
                           {learning}
                         </span>

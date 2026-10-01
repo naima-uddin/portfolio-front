@@ -12,7 +12,7 @@ export default async function ProjectsPage() {
 
   return (
     <main className="bg-[#eceef2] min-h-screen">
-      <section className="relative pt-32 pb-12 overflow-hidden">
+      <section className="relative pt-28 pb-12 sm:pt-32 overflow-hidden">
         <div className="absolute inset-0 bg-grid" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] glow-emerald" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#eceef2]" />
@@ -30,7 +30,7 @@ export default async function ProjectsPage() {
               Projects I&apos;ve <span className="heading-accent heading-accent-load text-gradient">built.</span>
             </h1>
             <p
-              className="animate-slide-up mt-5 text-lg text-slate-600 max-w-2xl"
+              className="animate-slide-up mt-4 sm:mt-5 text-base sm:text-lg text-slate-600 max-w-2xl"
               style={{ animationDelay: "220ms" }}
             >
               From government approval systems to trading platforms and AI —

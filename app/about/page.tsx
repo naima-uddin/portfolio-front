@@ -43,13 +43,13 @@ export default async function About() {
   return (
     <main className="bg-[#eceef2] min-h-screen">
       {/* Intro */}
-      <section className="relative pt-32 pb-12 overflow-hidden">
+      <section className="relative pt-28 pb-12 sm:pt-32 overflow-hidden">
         <div className="absolute inset-0 bg-grid" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] glow-emerald" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#eceef2]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <div className="grid lg:grid-cols-[1fr_340px] gap-14 items-start">
+          <div className="grid lg:grid-cols-[1fr_340px] gap-10 lg:gap-14 items-start">
             <div>
               <p className="animate-slide-down font-mono text-sm font-semibold text-brand-600 mb-4">
                 About me
@@ -64,7 +64,7 @@ export default async function About() {
               </h1>
 
               <div
-                className="animate-slide-up mt-8 space-y-5 text-lg text-slate-600 leading-relaxed max-w-2xl"
+                className="animate-slide-up mt-6 sm:mt-8 space-y-4 sm:space-y-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl"
                 style={{ animationDelay: "250ms" }}
               >
                 {aboutBio.map((paragraph, i) => (
@@ -73,20 +73,20 @@ export default async function About() {
               </div>
 
               <div
-                className="animate-slide-up mt-9 flex flex-wrap gap-4"
+                className="animate-slide-up mt-8 sm:mt-9 flex flex-wrap gap-3 sm:gap-4"
                 style={{ animationDelay: "400ms" }}
               >
                 <a
                   href={siteConfig.resumeUrl}
                   download
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-all duration-300 hover:shadow-lg shadow-brand-600/25"
+                  className="flex-1 sm:flex-none whitespace-nowrap inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base rounded-full bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-all duration-300 hover:shadow-lg shadow-brand-600/25"
                 >
                   <Download size={18} />
                   Download Resume
                 </a>
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
+                  className="flex-1 sm:flex-none whitespace-nowrap group inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
                 >
                   Let&apos;s connect
                   <ArrowUpRight
@@ -230,7 +230,7 @@ export default async function About() {
       </section>
 
       {/* Experience (shared with home) */}
-      <ExperienceSection experiences={experiences} />
+      <ExperienceSection experiences={experiences} config={siteConfig} />
 
       {/* Education */}
       <section className="relative bg-[#eceef2] py-14 lg:py-16 border-t border-slate-900/5">

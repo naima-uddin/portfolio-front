@@ -9,7 +9,7 @@ const Footer = ({ config = siteConfig }: { config?: SiteConfig }) => {
       {/* Bottom bar */}
       <div>
         <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-5">
-          <p className="text-sm text-[#8b949e]">
+          <p className="text-center text-sm text-[#8b949e] sm:text-left">
             © {year} {config.name}. Built with Next.js & Tailwind CSS.
           </p>
           <div className="flex items-center gap-1">

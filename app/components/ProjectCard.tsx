@@ -40,8 +40,23 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
       )}
 
+      {/* Touch screens have no hover: show the title as a caption and make
+          the whole tile open the details page. */}
+      <Link
+        href={`/projects/${project.id}`}
+        aria-label={`View ${project.title} details`}
+        className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-zinc-950/95 via-zinc-950/55 via-50% to-transparent px-2.5 pb-2.5 [@media(hover:hover)]:hidden"
+      >
+        <p className="font-mono text-[9px] uppercase tracking-widest text-brand-400">
+          {project.category}
+        </p>
+        <h3 className="mt-0.5 line-clamp-2 text-xs font-semibold leading-snug text-white sm:text-sm">
+          {project.title}
+        </h3>
+      </Link>
+
       {/* Hover overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950/80 px-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950/80 px-4 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:hidden">
         <p className="translate-y-2 font-mono text-[10px] uppercase tracking-widest text-brand-400 transition-transform duration-300 group-hover:translate-y-0">
           {project.category}
         </p>
