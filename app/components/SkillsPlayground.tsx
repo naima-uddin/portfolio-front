@@ -31,17 +31,17 @@ const TECHS: Tech[] = [
   { name: "JavaScript", Icon: SiJavascript, color: "#F7DF1E" },
   { name: "TypeScript", Icon: SiTypescript, color: "#3178C6" },
   { name: "React", Icon: SiReact, color: "#61DAFB" },
-  { name: "Next.js", Icon: SiNextdotjs, color: "#FFFFFF" },
+  { name: "Next.js", Icon: SiNextdotjs, color: "#111111" },
   { name: "Redux", Icon: SiRedux, color: "#764ABC" },
   { name: "Tailwind", Icon: SiTailwindcss, color: "#06B6D4" },
   { name: "Framer", Icon: SiFramer, color: "#0055FF" },
-  { name: "Three.js", Icon: SiThreedotjs, color: "#FFFFFF" },
+  { name: "Three.js", Icon: SiThreedotjs, color: "#111111" },
   { name: "Node.js", Icon: SiNodedotjs, color: "#339933" },
-  { name: "Express", Icon: SiExpress, color: "#FFFFFF" },
+  { name: "Express", Icon: SiExpress, color: "#111111" },
   { name: "MongoDB", Icon: SiMongodb, color: "#47A248" },
   { name: "Firebase", Icon: SiFirebase, color: "#FFCA28" },
   { name: "Git", Icon: SiGit, color: "#F05032" },
-  { name: "GitHub", Icon: SiGithub, color: "#FFFFFF" },
+  { name: "GitHub", Icon: SiGithub, color: "#181717" },
   { name: "Postman", Icon: SiPostman, color: "#FF6C37" },
   { name: "Figma", Icon: SiFigma, color: "#F24E1E" },
 ];
@@ -92,23 +92,34 @@ const SkillsPlayground = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    let width = container.clientWidth;
-    let height = container.clientHeight;
-    const radius = width < 640 ? 34 : 44;
+    let width = 0;
+    let height = 0;
+    let radius = 44;
+    let spawned = false;
 
-    // Scatter chips along the top so they rain down
-    bodies.current = TECHS.map((_, i) => ({
-      x: radius + Math.random() * (width - radius * 2),
-      y: -radius - Math.random() * height * 0.8 - i * 10,
-      vx: (Math.random() - 0.5) * 2,
-      vy: 0,
-      dragging: false,
-    }));
-
-    const onResize = () => {
+    // Radius comes from the rendered chip so physics always matches its CSS size.
+    const measure = () => {
       width = container.clientWidth;
       height = container.clientHeight;
+      const chip = chipRefs.current[0];
+      radius = chip?.offsetWidth ? chip.offsetWidth / 2 : width < 640 ? 34 : 44;
     };
+
+    // Scatter chips along the top so they rain down. Deferred until the
+    // container has a real size — spawning against a 0×0 box (e.g. right
+    // after a hot reload or a jump-link) pins every chip above the box.
+    const spawn = () => {
+      bodies.current = TECHS.map((_, i) => ({
+        x: radius + Math.random() * (width - radius * 2),
+        y: -radius - Math.random() * height * 0.8 - i * 10,
+        vx: (Math.random() - 0.5) * 2,
+        vy: 0,
+        dragging: false,
+      }));
+      spawned = true;
+    };
+
+    const onResize = measure;
     const ro = new ResizeObserver(onResize);
     ro.observe(container);
 
@@ -159,6 +170,14 @@ const SkillsPlayground = () => {
 
     let raf = 0;
     const step = () => {
+      if (!spawned) {
+        measure();
+        if (width <= radius * 2 || height <= 0) {
+          raf = requestAnimationFrame(step);
+          return;
+        }
+        spawn();
+      }
       const list = bodies.current;
       for (const b of list) {
         if (!b.dragging) {
@@ -242,20 +261,19 @@ const SkillsPlayground = () => {
   }, [started, reducedMotion]);
 
   return (
-    <section id="skills" className="scroll-mt-16 relative bg-[#0d1117] py-28 overflow-hidden">
-      {/* GitHub-dark backdrop: dot grid + soft green glow */}
+    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] py-28 border-t border-slate-900/5 overflow-hidden">
+      {/* Soft green dot grid backdrop */}
       <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-      <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[500px] glow-navy" />
       <div className="relative max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <span className="inline-block px-3 py-1 rounded-full border border-brand-500/40 bg-brand-500/10 font-mono text-xs sm:text-sm font-bold text-brand-400 uppercase tracking-[0.25em]">
+          <span className="inline-block px-3 py-1 rounded-full border border-brand-500/40 bg-brand-500/10 font-mono text-xs sm:text-sm font-bold text-brand-600 uppercase tracking-[0.25em]">
             Tech Stack
           </span>
-          <h2 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-            My <span className="text-shimmer">Skills</span>
+          <h2 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold text-zinc-900 tracking-tight">
+            My <span className="text-gradient">Skills</span>
           </h2>
           {!reducedMotion && (
-            <p className="mt-4 text-sm text-[#8b949e] font-mono">
+            <p className="mt-4 text-sm text-slate-500 font-mono">
               ✦ grab a bubble and throw it around
             </p>
           )}
@@ -267,10 +285,10 @@ const SkillsPlayground = () => {
             {TECHS.map(({ name, Icon, color }) => (
               <div
                 key={name}
-                className="flex items-center gap-2.5 px-5 py-3 rounded-full gh-card"
+                className="flex items-center gap-2.5 px-5 py-3 rounded-full surface"
               >
                 <Icon size={20} style={{ color }} />
-                <span className="font-mono text-xs uppercase tracking-wide text-[#c9d1d9]">
+                <span className="font-mono text-xs uppercase tracking-wide text-slate-700">
                   {name}
                 </span>
               </div>
@@ -279,7 +297,7 @@ const SkillsPlayground = () => {
         ) : (
           <div
             ref={containerRef}
-            className="relative h-[280px] sm:h-[320px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-3xl border border-[#30363d] bg-[#010409]/60"
+            className="relative h-[280px] sm:h-[320px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-3xl border border-slate-900/10 bg-white/60 shadow-[inset_0_2px_12px_rgba(15,23,42,0.05)]"
           >
             {TECHS.map(({ name, Icon, color }, i) => (
               <div
@@ -287,14 +305,14 @@ const SkillsPlayground = () => {
                 ref={(el) => {
                   chipRefs.current[i] = el;
                 }}
-                className="absolute top-0 left-0 w-[68px] h-[68px] sm:w-[88px] sm:h-[88px] rounded-full gh-card flex flex-col items-center justify-center gap-1 will-change-transform"
+                className="absolute top-0 left-0 w-[68px] h-[68px] sm:w-[88px] sm:h-[88px] rounded-full bg-white border border-slate-900/10 flex flex-col items-center justify-center gap-1 will-change-transform"
                 style={{
                   transform: "translate(-200px, -200px)",
-                  boxShadow: `0 0 20px ${color}26, inset 0 0 14px ${color}14`,
+                  boxShadow: `0 6px 18px -6px ${color}55, inset 0 0 12px ${color}12`,
                 }}
               >
                 <Icon className="text-xl sm:text-[26px]" style={{ color }} />
-                <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-wide text-[#8b949e]">
+                <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-wide text-slate-600">
                   {name}
                 </span>
               </div>

@@ -124,7 +124,7 @@
 
 /* Dot grid for the dark sections */
 .bg-grid-dark {
-  background-image: radial-gradient(rgba(64, 196, 99, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(26, 127, 55, 0.14) 1px, transparent 1px);
   background-size: 28px 28px;
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 80%);
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 80%);
