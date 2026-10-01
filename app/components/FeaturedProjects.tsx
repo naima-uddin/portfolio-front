@@ -27,6 +27,17 @@ const FeaturedProjects = async () => {
                 Selected <span className="text-brand-600">projects</span>
               </h2>
             </div>
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-2 border border-zinc-900 px-6 py-2.5 text-sm font-semibold text-zinc-900 transition-colors duration-300 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
+            >
+              View all projects
+              <span className="text-xs font-medium opacity-60">({ordered.length})</span>
+              <ArrowRight
+                size={16}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
           </div>
         </Reveal>
 
@@ -40,20 +51,6 @@ const FeaturedProjects = async () => {
               <ProjectCard project={project} />
             </Reveal>
           ))}
-        </div>
-
-        <div className="mt-6 flex justify-center">
-          <Link
-            href="/projects"
-            className="group inline-flex items-center gap-2 border border-zinc-900 px-6 py-2.5 text-sm font-semibold text-zinc-900 transition-colors duration-300 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
-          >
-            View all projects
-            <span className="text-xs font-medium opacity-60">({ordered.length})</span>
-            <ArrowRight
-              size={16}
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </Link>
         </div>
       </div>
     </section>
