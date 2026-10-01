@@ -312,15 +312,10 @@ const SkillsPlayground = ({
   }, [started, reducedMotion, techs]);
 
   return (
-    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] pt-2 pb-8 lg:pb-10 overflow-hidden">
-      {/* Soft green dot grid backdrop */}
-      <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
+    <section id="skills" className="scroll-mt-16 relative bg-[#eceef2] pt-0 pb-8 lg:pb-10 overflow-hidden">
       <div className="relative mx-auto w-full max-w-7xl px-6">
-        <div className="text-center mb-5">
-          <span className="inline-block px-2.5 py-0.5 rounded-full border border-brand-500/40 bg-brand-500/10 font-mono text-[11px] font-bold text-brand-600 uppercase tracking-[0.2em]">
-            Tech Stack
-          </span>
-          <h2 className="mt-2 text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
+        <div className="text-center mb-3">
+          <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
             My <span className="text-gradient">Skills</span>
           </h2>
           {!reducedMotion && (
@@ -348,7 +343,7 @@ const SkillsPlayground = ({
         ) : (
           <div
             ref={containerRef}
-            className="relative h-[320px] sm:h-[190px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing rounded-2xl border border-slate-900/10 bg-white/60 shadow-[inset_0_2px_12px_rgba(15,23,42,0.05)]"
+            className="relative h-[320px] sm:h-[170px] overflow-hidden touch-none select-none cursor-grab active:cursor-grabbing"
           >
             {techs.map(({ name, Icon, color }, i) => (
               <div
@@ -369,6 +364,10 @@ const SkillsPlayground = ({
               </div>
             ))}
           </div>
+        )}
+        {!reducedMotion && (
+          // Soft floor the bubbles land on
+          <div className="relative mx-auto h-3 rounded-full bg-gradient-to-b from-slate-300/80 to-slate-200/60 shadow-[0_6px_14px_-4px_rgba(15,23,42,0.18)]" />
         )}
       </div>
     </section>
