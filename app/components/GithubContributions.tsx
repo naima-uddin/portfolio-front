@@ -1,8 +1,5 @@
 import {
   Github,
-  Star,
-  Users,
-  FolderGit2,
   ArrowUpRight,
   Flame,
   Trophy,
@@ -21,9 +18,6 @@ interface ContributionDay {
 }
 
 interface GithubData {
-  followers: number;
-  repos: number;
-  stars: number;
   totalContributions: number;
   days: ContributionDay[];
 }
@@ -36,31 +30,15 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 async function getGithubData(): Promise<GithubData | null> {
   try {
     const revalidate = { next: { revalidate: 3600 } };
-    const [userRes, contribRes, reposRes] = await Promise.all([
-      fetch(`https://api.github.com/users/${username}`, revalidate),
-      fetch(
-        `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-        revalidate
-      ),
-      fetch(
-        `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
-        revalidate
-      ),
-    ]);
-    if (!userRes.ok || !contribRes.ok) return null;
+    const contribRes = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+      revalidate
+    );
+    if (!contribRes.ok) return null;
 
-    const user = await userRes.json();
     const contrib = await contribRes.json();
-    let stars = 0;
-    if (reposRes.ok) {
-      const repos: { stargazers_count?: number }[] = await reposRes.json();
-      stars = repos.reduce((sum, r) => sum + (r.stargazers_count ?? 0), 0);
-    }
 
     return {
-      followers: user.followers ?? 0,
-      repos: user.public_repos ?? 0,
-      stars,
       totalContributions: contrib.total?.lastYear ?? 0,
       days: contrib.contributions ?? [],
     };
@@ -103,7 +81,7 @@ function formatDate(date: string) {
   return `${MONTHS[d.getMonth()]} ${d.getDate()}`;
 }
 
-// GitHub activity section: terminal-style panel with heatmap, streaks and profile stats.
+// GitHub activity section: terminal-style panel with heatmap and streaks.
 const GithubContributions = async () => {
   const data = await getGithubData();
 
@@ -153,14 +131,6 @@ const GithubContributions = async () => {
       ]
     : [];
 
-  const stats = data
-    ? [
-        { icon: <FolderGit2 size={15} />, label: "repos", value: data.repos },
-        { icon: <Star size={15} />, label: "stars", value: data.stars },
-        { icon: <Users size={15} />, label: "followers", value: data.followers },
-      ]
-    : [];
-
   return (
     <section className="relative bg-[#eceef2] py-6 lg:py-8">
       <div className="max-w-7xl mx-auto px-6">
@@ -170,21 +140,21 @@ const GithubContributions = async () => {
               <p className="font-mono text-xs font-semibold text-brand-600 mb-1">
                 04 — Open source
               </p>
-              <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
+              <h2 className="text-3xl lg:text-4xl font-black uppercase text-zinc-900 tracking-tight">
                 Code &amp; <span className="text-brand-600">contributions</span>
               </h2>
-              <p className="mt-1 text-xs text-slate-500 font-mono">
-                {"// shipping something almost every day"}
+              <p className="mt-1 text-xs font-semibold text-zinc-700 font-mono">
+                {"// consistency isn't a goal — it's the default."}
               </p>
             </div>
             <a
               href={siteConfig.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 border border-zinc-900 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition-colors duration-300 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
+              className="group inline-flex items-center gap-2 border border-zinc-900 px-5 py-2.5 font-mono text-sm font-bold text-zinc-900 transition-colors duration-300 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
             >
               <Github size={16} />
-              Follow @{username}
+              @{username}
               <ArrowUpRight
                 size={15}
                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -221,7 +191,7 @@ const GithubContributions = async () => {
               </div>
 
               <div className="relative p-4 sm:p-5">
-                {/* Command + headline number + profile stats */}
+                {/* Command + headline number */}
                 <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
                   <div>
                     <p className="font-mono text-[11px] sm:text-xs text-zinc-500">
@@ -239,15 +209,10 @@ const GithubContributions = async () => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                    {stats.map((s) => (
-                      <span key={s.label} className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400">
-                        <span className="text-zinc-500">{s.icon}</span>
-                        <span className="font-semibold text-white">{s.value.toLocaleString()}</span>
-                        {s.label}
-                      </span>
-                    ))}
-                  </div>
+                  <span className="inline-flex items-center gap-2 rounded-md border border-brand-500/40 bg-brand-500/10 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand-400">
+                    <Flame size={13} />
+                    Always shipping
+                  </span>
                 </div>
 
                 {/* Heatmap */}
