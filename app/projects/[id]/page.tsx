@@ -4,18 +4,26 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
   Calendar,
-  CheckCircle,
+  Check,
   Code,
   Database,
   ExternalLink,
+  Folder,
   Github,
   Globe,
+  GraduationCap,
   Images,
   Layers,
+  Lightbulb,
   Server,
   Shield,
+  Sparkles,
   Star,
+  TriangleAlert,
+  X,
   Zap,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
@@ -49,14 +57,51 @@ export async function generateMetadata({
 }
 
 const techIcons: Record<string, React.ReactNode> = {
-  frontend: <Globe className="w-4 h-4" />,
-  backend: <Server className="w-4 h-4" />,
-  database: <Database className="w-4 h-4" />,
-  ai: <Star className="w-4 h-4" />,
-  realtime: <Zap className="w-4 h-4" />,
-  deployment: <Layers className="w-4 h-4" />,
-  integration: <Shield className="w-4 h-4" />,
+  frontend: <Globe className="w-3.5 h-3.5" />,
+  backend: <Server className="w-3.5 h-3.5" />,
+  database: <Database className="w-3.5 h-3.5" />,
+  ai: <Star className="w-3.5 h-3.5" />,
+  realtime: <Zap className="w-3.5 h-3.5" />,
+  deployment: <Layers className="w-3.5 h-3.5" />,
+  integration: <Shield className="w-3.5 h-3.5" />,
 };
+
+// Soft tint of the project's accent color (works with any CSS color value).
+const tint = (color: string, amount: number) =>
+  `color-mix(in srgb, ${color} ${amount}%, transparent)`;
+
+// Shared type scale so every section on the page reads the same.
+const h2Class =
+  "reveal-item flex items-center gap-3 text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 mb-5 sm:mb-6";
+const h3Class = "flex items-center gap-2.5 text-base font-semibold text-zinc-900";
+const bodyClass = "text-sm sm:text-[15px] text-slate-600 leading-relaxed";
+const eyebrowClass = "font-mono text-xs uppercase tracking-wider text-slate-500";
+
+const primaryBtn =
+  "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-600 text-white text-sm sm:text-base font-semibold whitespace-nowrap hover:bg-brand-700 hover:shadow-lg shadow-brand-600/25 transition-all duration-300";
+const secondaryBtn =
+  "inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full surface text-zinc-800 text-sm sm:text-base font-medium whitespace-nowrap hover:bg-brand-700/10 hover:text-brand-700 transition-all duration-300";
+
+function IconBadge({
+  color,
+  children,
+  size = "md",
+}: {
+  color: string;
+  children: React.ReactNode;
+  size?: "sm" | "md";
+}) {
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center rounded-xl ${
+        size === "md" ? "w-10 h-10" : "w-8 h-8 rounded-lg"
+      }`}
+      style={{ backgroundColor: tint(color, 12), color }}
+    >
+      {children}
+    </span>
+  );
+}
 
 export default async function ProjectDetailPage({
   params,
@@ -64,12 +109,17 @@ export default async function ProjectDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const project = await getProjectById(id);
-  const { profile } = await getSiteContent();
+  const [project, { profile }, { projects }] = await Promise.all([
+    getProjectById(id),
+    getSiteContent(),
+    getProjects(),
+  ]);
 
   if (!project) {
     notFound();
   }
+
+  const accent = project.color || "#1a7f37";
 
   // Repo buttons: explicit repo links, else the single GitHub URL.
   const repos = project.repoLinks?.length
@@ -78,75 +128,98 @@ export default async function ProjectDetailPage({
     ? [{ label: "GitHub", url: project.githubUrl }]
     : [];
   const gallery = project.gallery ?? [];
+  const hasLive = Boolean(project.liveUrl) && project.liveUrl !== "#";
+  const techEntries = Object.entries(project.techStack).filter(
+    ([, list]) => list && list.length > 0
+  );
+
+  // Next project in the list (wraps around).
+  const index = projects.findIndex((p) => p.id === project.id);
+  const nextProject =
+    projects.length > 1 ? projects[(index + 1) % projects.length] : null;
 
   return (
-    <main className="bg-[#eceef2] min-h-screen">
-      <div className="relative pt-28 pb-14 sm:pt-32 lg:pb-20 overflow-hidden">
+    <main className="bg-[#eceef2] min-h-screen overflow-x-hidden">
+      <div className="relative pt-28 pb-16 sm:pt-32 lg:pb-24 overflow-hidden">
         <div className="absolute inset-0 bg-grid" />
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-20"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] max-w-[200vw] h-[400px] opacity-20"
           style={{
-            background: `radial-gradient(ellipse 50% 50% at 50% 50%, ${project.color}, transparent 70%)`,
+            background: `radial-gradient(ellipse 50% 50% at 50% 50%, ${accent}, transparent 70%)`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#eceef2]" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
           <Link
             href="/projects"
-            className="animate-fade-in inline-flex items-center gap-2 text-sm text-slate-500 hover:text-brand-600 transition-colors mb-6 sm:mb-10"
+            className="animate-fade-in group inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-brand-600 transition-colors mb-6 sm:mb-10"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft
+              size={16}
+              className="transition-transform duration-300 group-hover:-translate-x-0.5"
+            />
             Back to projects
           </Link>
 
           {/* Hero */}
-          <div className="mb-8 lg:mb-10">
-            <div className="animate-slide-down flex flex-wrap items-center gap-3 mb-5">
-              <span className="font-mono text-xs uppercase tracking-wider text-slate-500">
+          <header className="mb-8 sm:mb-12">
+            <div className="animate-slide-down flex flex-wrap items-center gap-2 mb-5">
+              <span
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-xs uppercase tracking-wider font-semibold"
+                style={{ backgroundColor: tint(accent, 12), color: accent }}
+              >
+                <Folder size={12} />
                 {project.category}
               </span>
               <span
-                className={`px-3 py-1 rounded-full text-xs font-medium ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-xs uppercase tracking-wider font-semibold border ${
                   project.status === "Live"
-                    ? "bg-green-100 text-green-700 border border-green-600/20"
-                    : "bg-blue-100 text-blue-700 border border-blue-600/20"
+                    ? "bg-green-50 text-green-700 border-green-600/20"
+                    : "bg-blue-50 text-blue-700 border-blue-600/20"
                 }`}
               >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    project.status === "Live"
+                      ? "bg-green-500 animate-blink"
+                      : "bg-blue-500"
+                  }`}
+                />
                 {project.status}
               </span>
-              <span className="flex items-center gap-1.5 text-xs text-slate-500">
-                <Calendar size={13} />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-xs uppercase tracking-wider font-semibold bg-white/70 border border-slate-900/10 text-slate-600">
+                <Calendar size={12} />
                 {project.duration}
               </span>
             </div>
 
             <h1
-              className="animate-slide-up text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-zinc-900 leading-[1.1]"
+              className="animate-slide-up max-w-4xl text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.15] text-balance"
               style={{ animationDelay: "100ms" }}
             >
               {project.title}
             </h1>
 
             <p
-              className="animate-slide-up mt-4 sm:mt-6 text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed"
+              className="animate-slide-up mt-4 sm:mt-6 max-w-3xl text-base sm:text-lg text-slate-600 leading-relaxed"
               style={{ animationDelay: "220ms" }}
             >
               {project.description}
             </p>
 
             <div
-              className="animate-slide-up flex flex-wrap gap-2.5 sm:gap-4 mt-7 sm:mt-9"
+              className="animate-slide-up flex flex-wrap gap-3 mt-7 sm:mt-9"
               style={{ animationDelay: "340ms" }}
             >
-              {project.liveUrl !== "#" && (
+              {hasLive && (
                 <a
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm sm:px-7 sm:py-3.5 sm:text-base rounded-full bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-all duration-300 hover:shadow-lg shadow-brand-600/25"
+                  className={`${primaryBtn} w-full sm:w-auto`}
                 >
-                  <ExternalLink size={18} />
+                  <ExternalLink size={17} />
                   Live Demo
                 </a>
               )}
@@ -156,24 +229,18 @@ export default async function ProjectDetailPage({
                   href={repo.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm sm:px-6 sm:py-3.5 sm:text-base rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
+                  className={`${secondaryBtn} flex-1 basis-[130px] sm:flex-none sm:basis-auto`}
                 >
-                  <Github size={18} />
+                  <Github size={17} />
                   {repo.label}
                 </a>
               ))}
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm sm:px-7 sm:py-3.5 sm:text-base rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
-              >
-                Build something like this
-              </Link>
             </div>
-          </div>
+          </header>
 
           {/* Cover */}
           <Reveal>
-            <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden surface mb-12 lg:mb-20">
+            <div className="relative aspect-[16/10] sm:aspect-video rounded-2xl sm:rounded-3xl overflow-hidden surface mb-12 sm:mb-16 lg:mb-20">
               {project.image ? (
                 <Image
                   src={project.image}
@@ -188,12 +255,12 @@ export default async function ProjectDetailPage({
                   <div
                     className="absolute inset-0 opacity-25"
                     style={{
-                      background: `radial-gradient(ellipse 60% 60% at 50% 40%, ${project.color}, transparent 70%)`,
+                      background: `radial-gradient(ellipse 60% 60% at 50% 40%, ${accent}, transparent 70%)`,
                     }}
                   />
                   <span
-                    className="relative font-mono text-6xl font-bold"
-                    style={{ color: project.color }}
+                    className="relative font-mono text-4xl sm:text-6xl font-bold"
+                    style={{ color: accent }}
                   >
                     {"</>"}
                   </span>
@@ -202,104 +269,87 @@ export default async function ProjectDetailPage({
             </div>
           </Reveal>
 
-          {/* Gallery */}
-          {gallery.length > 0 && (
-            <Reveal>
-              <section className="mb-12 lg:mb-20">
-                <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7 flex items-center gap-3">
-                  <Images size={24} style={{ color: project.color }} />
-                  Screenshots
-                </h2>
-                <div className="grid sm:grid-cols-2 gap-3 sm:gap-5">
-                  {gallery.map((src, i) => (
-                    <a
-                      key={src}
-                      href={src}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={stagger(1 + i)}
-                      className="reveal-item group relative aspect-video rounded-2xl overflow-hidden surface block"
-                    >
-                      <Image
-                        src={src}
-                        alt={`${project.title} screenshot ${i + 1}`}
-                        fill
-                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, 550px"
-                      />
-                    </a>
-                  ))}
-                </div>
-              </section>
-            </Reveal>
-          )}
-
           {/* Content grid */}
-          <div className="grid lg:grid-cols-[1fr_320px] gap-12">
-            <div className="space-y-12 lg:space-y-16">
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-10 lg:gap-12">
+            <div className="min-w-0 space-y-12 sm:space-y-16">
               {/* Features */}
-              <Reveal>
-                <section>
-                  <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7 flex items-center gap-3">
-                    <Star size={24} style={{ color: project.color }} />
-                    Key Features
-                  </h2>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {project.keyFeatures.map((feature, i) => (
-                      <div
-                        key={feature}
-                        style={stagger(1 + i)}
-                        className="reveal-item flex items-start gap-3 p-4 surface rounded-2xl"
-                      >
-                        <CheckCircle
-                          className="w-5 h-5 mt-0.5 flex-shrink-0"
-                          style={{ color: project.color }}
-                        />
-                        <span className="text-sm text-slate-700 leading-relaxed">
-                          {feature}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              </Reveal>
-
-              {/* Challenges & Solutions */}
-              {project.challenges && project.solutions && (
+              {project.keyFeatures.length > 0 && (
                 <Reveal>
                   <section>
-                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7">
+                    <h2 style={stagger(0)} className={h2Class}>
+                      <IconBadge color={accent}>
+                        <Sparkles size={18} />
+                      </IconBadge>
+                      Key Features
+                    </h2>
+                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                      {project.keyFeatures.map((feature, i) => (
+                        <div
+                          key={feature}
+                          style={stagger(1 + i)}
+                          className="reveal-item flex items-start gap-3 p-4 sm:p-5 surface rounded-2xl h-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                        >
+                          <span
+                            className="mt-0.5 inline-flex w-5 h-5 shrink-0 items-center justify-center rounded-full"
+                            style={{ backgroundColor: tint(accent, 15), color: accent }}
+                          >
+                            <Check size={12} strokeWidth={3} />
+                          </span>
+                          <span className={bodyClass}>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                </Reveal>
+              )}
+
+              {/* Challenges & Solutions */}
+              {project.challenges?.length && project.solutions?.length ? (
+                <Reveal>
+                  <section>
+                    <h2 style={stagger(0)} className={h2Class}>
+                      <IconBadge color={accent}>
+                        <Lightbulb size={18} />
+                      </IconBadge>
                       Challenges & Solutions
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                      <div className="reveal-item surface rounded-2xl p-6" style={stagger(1)}>
-                        <h3 className="font-mono text-sm text-red-400 mb-4">
+                    <div className="grid md:grid-cols-2 gap-3 sm:gap-4">
+                      <div
+                        className="reveal-item surface rounded-2xl p-5 sm:p-6"
+                        style={stagger(1)}
+                      >
+                        <h3 className={`${h3Class} mb-4 pb-4 border-b border-slate-900/10`}>
+                          <span className="inline-flex w-8 h-8 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                            <TriangleAlert size={16} />
+                          </span>
                           The challenges
                         </h3>
                         <ul className="space-y-3">
                           {project.challenges.map((item) => (
-                            <li
-                              key={item}
-                              className="flex gap-2.5 text-sm text-slate-600 leading-relaxed"
-                            >
-                              <span className="text-red-400/70 mt-0.5">✕</span>
+                            <li key={item} className={`flex gap-3 ${bodyClass}`}>
+                              <span className="mt-1 inline-flex w-4 h-4 shrink-0 items-center justify-center rounded-full bg-rose-50 text-rose-600">
+                                <X size={10} strokeWidth={3} />
+                              </span>
                               {item}
                             </li>
                           ))}
                         </ul>
                       </div>
-                      <div className="reveal-item surface rounded-2xl p-6" style={stagger(2)}>
-                        <h3 className="font-mono text-sm font-semibold text-brand-600 mb-4">
+                      <div
+                        className="reveal-item surface rounded-2xl p-5 sm:p-6"
+                        style={stagger(2)}
+                      >
+                        <h3 className={`${h3Class} mb-4 pb-4 border-b border-slate-900/10`}>
+                          <span className="inline-flex w-8 h-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+                            <Lightbulb size={16} />
+                          </span>
                           How I solved them
                         </h3>
                         <ul className="space-y-3">
                           {project.solutions.map((item) => (
-                            <li
-                              key={item}
-                              className="flex gap-2.5 text-sm text-slate-600 leading-relaxed"
-                            >
-                              <span className="text-slate-500 mt-0.5">
-                                ✓
+                            <li key={item} className={`flex gap-3 ${bodyClass}`}>
+                              <span className="mt-1 inline-flex w-4 h-4 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                                <Check size={10} strokeWidth={3} />
                               </span>
                               {item}
                             </li>
@@ -309,24 +359,67 @@ export default async function ProjectDetailPage({
                     </div>
                   </section>
                 </Reveal>
-              )}
+              ) : null}
 
               {/* Learnings */}
-              {project.learnings && (
+              {project.learnings?.length ? (
                 <Reveal>
                   <section>
-                    <h2 style={stagger(0)} className="reveal-item text-2xl lg:text-3xl font-bold text-zinc-900 mb-5 sm:mb-7">
+                    <h2 style={stagger(0)} className={h2Class}>
+                      <IconBadge color={accent}>
+                        <GraduationCap size={18} />
+                      </IconBadge>
                       What I learned
                     </h2>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                       {project.learnings.map((learning, i) => (
-                        <span
+                        <div
                           key={learning}
                           style={stagger(1 + i)}
-                          className="reveal-item px-4 py-2 rounded-2xl sm:rounded-full surface text-sm text-slate-700"
+                          className="reveal-item flex items-start gap-3 p-4 sm:p-5 surface rounded-2xl h-full"
                         >
-                          {learning}
-                        </span>
+                          <span
+                            className="font-mono text-xs font-semibold mt-0.5 sm:mt-1"
+                            style={{ color: accent }}
+                          >
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span className={bodyClass}>{learning}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                </Reveal>
+              ) : null}
+
+              {/* Gallery */}
+              {gallery.length > 0 && (
+                <Reveal>
+                  <section>
+                    <h2 style={stagger(0)} className={h2Class}>
+                      <IconBadge color={accent}>
+                        <Images size={18} />
+                      </IconBadge>
+                      Screenshots
+                    </h2>
+                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                      {gallery.map((src, i) => (
+                        <a
+                          key={src}
+                          href={src}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={stagger(1 + i)}
+                          className="reveal-item group relative aspect-video rounded-2xl overflow-hidden surface block"
+                        >
+                          <Image
+                            src={src}
+                            alt={`${project.title} screenshot ${i + 1}`}
+                            fill
+                            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                            sizes="(max-width: 640px) 100vw, 400px"
+                          />
+                        </a>
                       ))}
                     </div>
                   </section>
@@ -335,63 +428,112 @@ export default async function ProjectDetailPage({
             </div>
 
             {/* Sidebar */}
-            <aside className="space-y-6 lg:sticky lg:top-28 self-start">
-              <Reveal>
-                <section className="surface rounded-2xl p-6">
-                  <h3 className="font-bold text-zinc-900 mb-5 flex items-center gap-2">
-                    <Code size={18} style={{ color: project.color }} />
-                    Tech Stack
-                  </h3>
-                  <div className="space-y-4">
-                    {Object.entries(project.techStack).map(
-                      ([category, technologies]) => (
+            <aside className="min-w-0 space-y-4 sm:space-y-5 lg:sticky lg:top-28 self-start">
+              {techEntries.length > 0 && (
+                <Reveal>
+                  <section className="surface rounded-2xl p-5 sm:p-6">
+                    <h3 className={`${h3Class} mb-5`}>
+                      <IconBadge color={accent} size="sm">
+                        <Code size={16} />
+                      </IconBadge>
+                      Tech Stack
+                    </h3>
+                    <div className="space-y-4">
+                      {techEntries.map(([category, technologies]) => (
                         <div key={category}>
-                          <h4 className="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
-                            {techIcons[category] ?? <Code className="w-4 h-4" />}
+                          <h4 className={`${eyebrowClass} mb-2 flex items-center gap-1.5`}>
+                            {techIcons[category] ?? <Code className="w-3.5 h-3.5" />}
                             {category}
                           </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {technologies.map((tech: string) => (
+                          <div className="flex flex-wrap gap-1.5">
+                            {technologies!.map((tech: string) => (
                               <span
                                 key={tech}
-                                className="px-3 py-1 rounded-full bg-slate-900/5 border border-slate-900/10 text-xs text-slate-700"
+                                className="px-2.5 py-1 rounded-full bg-slate-900/5 border border-slate-900/10 text-xs font-medium text-slate-700"
                               >
                                 {tech}
                               </span>
                             ))}
                           </div>
                         </div>
-                      )
-                    )}
-                  </div>
-                </section>
-              </Reveal>
+                      ))}
+                    </div>
+                  </section>
+                </Reveal>
+              )}
 
-              <Reveal delay={100}>
-                <section className="surface rounded-2xl p-6">
-                  <h3 className="font-bold text-zinc-900 mb-4 flex items-center gap-2">
-                    <Zap size={18} style={{ color: project.color }} />
-                    Highlights
-                  </h3>
-                  <ul className="space-y-2.5">
-                    {project.highlights.map((highlight, i) => (
-                      <li
-                        key={highlight}
-                        style={stagger(1 + i)}
-                        className="reveal-item flex items-center gap-2.5 text-sm text-slate-600"
-                      >
-                        <span
-                          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                          style={{ backgroundColor: project.color }}
-                        />
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
+              {project.highlights.length > 0 && (
+                <Reveal delay={100}>
+                  <section className="surface rounded-2xl p-5 sm:p-6">
+                    <h3 className={`${h3Class} mb-4`}>
+                      <IconBadge color={accent} size="sm">
+                        <Zap size={16} />
+                      </IconBadge>
+                      Highlights
+                    </h3>
+                    <ul className="space-y-3">
+                      {project.highlights.map((highlight, i) => (
+                        <li
+                          key={highlight}
+                          style={stagger(1 + i)}
+                          className="reveal-item flex items-start gap-3 text-sm text-slate-600 leading-relaxed"
+                        >
+                          <span
+                            className="mt-[7px] w-1.5 h-1.5 rounded-full shrink-0"
+                            style={{ backgroundColor: accent }}
+                          />
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                </Reveal>
+              )}
+
+              <Reveal delay={150}>
+                <section className="surface rounded-2xl p-5 sm:p-6">
+                  <h3 className={`${h3Class} mb-2`}>Have a similar idea?</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5">
+                    I can help you design and build it — from first sketch to
+                    production.
+                  </p>
+                  <Link href="/contact" className="inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700 hover:shadow-lg shadow-brand-600/25 transition-all duration-300">
+                    Let&apos;s talk
+                    <ArrowUpRight size={16} />
+                  </Link>
                 </section>
               </Reveal>
             </aside>
           </div>
+
+          {/* Next project */}
+          {nextProject && (
+            <Reveal>
+              <Link
+                href={`/projects/${nextProject.id}`}
+                className="group mt-16 sm:mt-20 flex items-center justify-between gap-4 surface rounded-2xl sm:rounded-3xl p-5 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="min-w-0">
+                  <p className={`${eyebrowClass} mb-2`}>Next project</p>
+                  <p className="text-lg sm:text-2xl font-bold tracking-tight text-zinc-900 group-hover:text-brand-700 transition-colors line-clamp-2">
+                    {nextProject.title}
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500 line-clamp-1">
+                    {nextProject.shortDesc}
+                  </p>
+                </div>
+                <span
+                  className="inline-flex w-11 h-11 sm:w-14 sm:h-14 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1"
+                  style={{
+                    backgroundColor: tint(nextProject.color || accent, 14),
+                    color: nextProject.color || accent,
+                  }}
+                >
+                  <ArrowRight size={20} />
+                </span>
+              </Link>
+            </Reveal>
+          )}
         </div>
       </div>
 

@@ -190,8 +190,8 @@ const ExperienceSection = ({
       <div className="mx-auto w-full max-w-7xl px-6">
         <Reveal>
           <div className="grid items-center gap-8 lg:grid-cols-[220px_1fr] lg:gap-12">
-            {/* ID card hanging from its lanyard */}
-            <div className="reveal-drop origin-top">
+            {/* ID card hanging from its lanyard (desktop only) */}
+            <div className="reveal-drop hidden origin-top lg:block">
               <IdCard config={config} />
             </div>
 
@@ -200,9 +200,14 @@ const ExperienceSection = ({
                 Where I&apos;ve <span className="heading-accent text-brand-600">worked</span>
               </h2>
 
-              <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-0 md:divide-x md:divide-slate-200">
+              <div className="mt-5 grid gap-4 md:grid-cols-2 md:gap-0 md:divide-x md:divide-slate-200">
                 {columns.map((col, i) => (
-                  <div key={col.heading + i} className={i > 0 ? "md:pl-8" : "md:pr-8"}>
+                  <div
+                    key={col.heading + i}
+                    className={`rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-900/5 md:rounded-none md:bg-transparent md:p-0 md:shadow-none md:ring-0 ${
+                      i > 0 ? "md:pl-8" : "md:pr-8"
+                    }`}
+                  >
                     <ExperienceColumn heading={col.heading} items={col.items} offset={1 + i} />
                   </div>
                 ))}
