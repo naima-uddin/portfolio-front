@@ -190,8 +190,7 @@ const ExperienceSection = ({
             <IdCard config={config} />
 
             <div className="lg:pl-10">
-              <p className="font-mono text-xs font-semibold text-brand-600">02 — Experience</p>
-              <h2 className="mt-1 text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
+              <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
                 Where I&apos;ve <span className="text-brand-600">worked</span>
               </h2>
 

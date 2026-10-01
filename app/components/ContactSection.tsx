@@ -146,8 +146,13 @@ const ContactSection = ({
           className="animate-slide-in-right"
           style={{ animationDelay: "200ms" }}
         >
-          <p className="font-mono text-xs font-semibold text-brand-600">05 — Contact</p>
-          <Heading className="mt-2 mb-5 text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.05] text-zinc-900">
+          <Heading
+            className={
+              standalone
+                ? "mb-5 text-4xl lg:text-5xl font-bold tracking-tight leading-[1.05] text-zinc-900"
+                : "mb-5 text-2xl lg:text-3xl font-bold tracking-tight text-zinc-900"
+            }
+          >
             Got an idea? <span className="text-brand-600">Let&apos;s talk.</span>
           </Heading>
 

@@ -137,13 +137,10 @@ const GithubContributions = async () => {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 mb-4">
             <div>
-              <p className="font-mono text-xs font-semibold text-brand-600 mb-1">
-                04 — Open source
-              </p>
-              <h2 className="text-3xl lg:text-4xl font-black uppercase text-zinc-900 tracking-tight">
+              <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
                 Code &amp; <span className="text-brand-600">contributions</span>
               </h2>
-              <p className="mt-1 text-xs font-semibold text-zinc-700 font-mono">
+              <p className="mt-1 text-xs text-slate-500 font-mono">
                 {"// consistency isn't a goal — it's the default."}
               </p>
             </div>

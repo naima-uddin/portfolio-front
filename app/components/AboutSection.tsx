@@ -85,8 +85,7 @@ const AboutSection = ({
           <div className="grid overflow-hidden rounded-2xl bg-white ring-1 ring-slate-900/5 shadow-sm lg:grid-cols-[280px_1fr]">
             {/* Left: education panel */}
             <aside className="relative bg-[#f1f8f3] border-b lg:border-b-0 lg:border-r border-brand-100 px-6 py-8">
-              <p className="font-mono text-xs font-semibold text-brand-600">01 — About</p>
-              <h3 className="mt-1 text-lg font-bold text-zinc-900">Education</h3>
+              <h3 className="text-lg font-bold text-zinc-900">Education</h3>
 
               {/* Dotted timeline */}
               <div className="relative mt-5 space-y-5">

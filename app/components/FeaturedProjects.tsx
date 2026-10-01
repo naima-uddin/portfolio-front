@@ -20,9 +20,6 @@ const FeaturedProjects = async () => {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 mb-5">
             <div>
-              <p className="font-mono text-xs font-semibold text-brand-600 mb-1">
-                03 — Work
-              </p>
               <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
                 Selected <span className="text-brand-600">projects</span>
               </h2>

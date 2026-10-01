@@ -316,7 +316,7 @@ const SkillsPlayground = ({
       <div className="relative mx-auto w-full max-w-7xl px-6">
         <div className="text-center mb-3">
           <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 tracking-tight">
-            My <span className="text-gradient">Skills</span>
+            My <span className="text-brand-600">Skills</span>
           </h2>
           {!reducedMotion && (
             <p className="mt-1 text-xs text-slate-500 font-mono">
