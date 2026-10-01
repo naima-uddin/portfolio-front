@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Loader2, Save } from "lucide-react";
-import type { Project } from "@/lib/data";
+import { ArrowLeft, Loader2, Plus, Save, Trash2 } from "lucide-react";
+import type { Project, RepoLink } from "@/lib/data";
 import { apiFetch } from "@/lib/api";
+import UploadField from "./UploadField";
 
 const inputClasses =
   "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-600 outline-none focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 transition-all";
@@ -42,6 +43,8 @@ interface FormState {
   duration: string;
   color: string;
   image: string;
+  gallery: string[];
+  repoLinks: RepoLink[];
   liveUrl: string;
   githubUrl: string;
   shortDesc: string;
@@ -64,6 +67,8 @@ const toFormState = (p?: Project): FormState => ({
   duration: p?.duration ?? "",
   color: p?.color ?? "#34d399",
   image: p?.image ?? "",
+  gallery: p?.gallery ?? [],
+  repoLinks: p?.repoLinks ?? [],
   liveUrl: p?.liveUrl ?? "",
   githubUrl: p?.githubUrl ?? "",
   shortDesc: p?.shortDesc ?? "",
@@ -113,6 +118,10 @@ const ProjectForm = ({ initial }: { initial?: Project }) => {
       duration: form.duration.trim(),
       color: form.color,
       image: form.image.trim() || undefined,
+      gallery: form.gallery.map((url) => url.trim()).filter(Boolean),
+      repoLinks: form.repoLinks
+        .map((r) => ({ label: r.label.trim() || "GitHub", url: r.url.trim() }))
+        .filter((r) => r.url),
       liveUrl: form.liveUrl.trim() || "#",
       githubUrl: form.githubUrl.trim(),
       shortDesc: form.shortDesc.trim(),
@@ -265,7 +274,9 @@ const ProjectForm = ({ initial }: { initial?: Project }) => {
                 />
               </div>
               <div>
-                <label className={labelClasses}>GitHub repo URL</label>
+                <label className={labelClasses}>
+                  Main GitHub URL (used on cards)
+                </label>
                 <input
                   className={inputClasses}
                   value={form.githubUrl}
@@ -273,17 +284,121 @@ const ProjectForm = ({ initial }: { initial?: Project }) => {
                   placeholder="https://github.com/..."
                 />
               </div>
-              <div>
-                <label className={labelClasses}>
-                  Image URL (e.g. /assets/projectImage/x.png)
-                </label>
-                <input
-                  className={inputClasses}
-                  value={form.image}
-                  onChange={(e) => set("image", e.target.value)}
-                  placeholder="Leave empty for stylish placeholder"
-                />
+            </div>
+
+            {/* Repo links (client / dashboard / server ...) */}
+            <div>
+              <label className={labelClasses}>
+                Code repositories (shown on the details page)
+              </label>
+              <div className="space-y-2">
+                {form.repoLinks.map((repo, i) => (
+                  <div key={i} className="flex gap-2 items-center">
+                    <input
+                      className={`${inputClasses} sm:max-w-[160px]`}
+                      value={repo.label}
+                      onChange={(e) =>
+                        set(
+                          "repoLinks",
+                          form.repoLinks.map((r, j) =>
+                            j === i ? { ...r, label: e.target.value } : r
+                          )
+                        )
+                      }
+                      placeholder="Frontend"
+                    />
+                    <input
+                      className={inputClasses}
+                      value={repo.url}
+                      onChange={(e) =>
+                        set(
+                          "repoLinks",
+                          form.repoLinks.map((r, j) =>
+                            j === i ? { ...r, url: e.target.value } : r
+                          )
+                        )
+                      }
+                      placeholder="https://github.com/..."
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        set(
+                          "repoLinks",
+                          form.repoLinks.filter((_, j) => j !== i)
+                        )
+                      }
+                      className="p-2.5 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-400/10 transition-all flex-shrink-0"
+                      title="Remove"
+                    >
+                      <Trash2 size={15} />
+                    </button>
+                  </div>
+                ))}
               </div>
+              <button
+                type="button"
+                onClick={() =>
+                  set("repoLinks", [...form.repoLinks, { label: "", url: "" }])
+                }
+                className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-zinc-300 text-sm hover:border-emerald-400/40 transition-all"
+              >
+                <Plus size={15} />
+                Add repository
+              </button>
+            </div>
+
+            {/* Main image */}
+            <UploadField
+              label="Main image (cover — used on cards & details page)"
+              value={form.image}
+              onChange={(url) => set("image", url)}
+            />
+
+            {/* Gallery */}
+            <div>
+              <label className={labelClasses}>
+                Other images (gallery on the details page)
+              </label>
+              <div className="space-y-3">
+                {form.gallery.map((url, i) => (
+                  <div key={i} className="flex gap-2 items-end">
+                    <div className="flex-1">
+                      <UploadField
+                        label={`Image ${i + 1}`}
+                        value={url}
+                        onChange={(next) =>
+                          set(
+                            "gallery",
+                            form.gallery.map((g, j) => (j === i ? next : g))
+                          )
+                        }
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        set(
+                          "gallery",
+                          form.gallery.filter((_, j) => j !== i)
+                        )
+                      }
+                      className="p-2.5 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-400/10 transition-all flex-shrink-0"
+                      title="Remove image"
+                    >
+                      <Trash2 size={15} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => set("gallery", [...form.gallery, ""])}
+                className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-zinc-300 text-sm hover:border-emerald-400/40 transition-all"
+              >
+                <Plus size={15} />
+                Add image
+              </button>
             </div>
           </section>
 

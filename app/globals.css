@@ -360,12 +360,12 @@
 .animate-marquee-reverse { animation: marquee 36s linear infinite reverse; }
 .animate-blink { animation: blink 2s ease-in-out infinite; }
 .animate-spin-slow { animation: spin-slow 16s linear infinite; }
-.animate-id-swing { animation: id-swing 5s ease-in-out infinite; }
+.animate-id-swing { animation: id-swing 6s ease-in-out infinite; }
 
 /* Hanging ID card sway */
 @keyframes id-swing {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
+  0%, 100% { transform: rotate(-0.8deg); }
+  50% { transform: rotate(0.8deg); }
 }
 
 /* Initial hidden state for entrance animations */

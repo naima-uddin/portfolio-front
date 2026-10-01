@@ -12,8 +12,8 @@ import {
 // ring and lobster clasp whose hook ends inside the card's punched slot.
 const Lanyard = () => (
   <svg
-    viewBox="0 30 230 222"
-    className="relative z-10 mx-auto block h-[174px] w-[180px]"
+    viewBox="0 55 230 197"
+    className="relative z-10 mx-auto block h-[154px] w-[180px]"
     aria-hidden="true"
   >
     <defs>
@@ -38,7 +38,7 @@ const Lanyard = () => (
         <stop offset="0.35" stopColor="#fff" stopOpacity="1" />
       </linearGradient>
       <mask id="strap-fade">
-        <rect y="30" width="230" height="222" fill="url(#fade)" />
+        <rect y="55" width="230" height="197" fill="url(#fade)" />
       </mask>
       <filter id="soft" x="-30%" y="-10%" width="160%" height="120%">
         <feDropShadow dx="1" dy="1.5" stdDeviation="1.2" floodColor="#0f172a" floodOpacity="0.18" />
@@ -93,13 +93,13 @@ const IdCard = ({ config }: { config: SiteConfig }) => {
         <div className="absolute left-4 top-2 h-1.5 w-1.5 rounded-full bg-[#dfe2e7] ring-1 ring-slate-400/50" />
         <div className="absolute right-4 top-2 h-1.5 w-1.5 rounded-full bg-[#dfe2e7] ring-1 ring-slate-400/50" />
 
-        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md ring-1 ring-slate-900/10">
+        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-md ring-1 ring-slate-900/10">
           <Image
             src={image}
             alt={config.name}
             fill
             sizes="180px"
-            className="object-cover"
+            className="object-cover object-top"
           />
         </div>
 

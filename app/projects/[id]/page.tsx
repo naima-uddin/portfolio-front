@@ -9,7 +9,9 @@ import {
   Code,
   Database,
   ExternalLink,
+  Github,
   Globe,
+  Images,
   Layers,
   Server,
   Shield,
@@ -67,6 +69,14 @@ export default async function ProjectDetailPage({
   if (!project) {
     notFound();
   }
+
+  // Repo buttons: explicit repo links, else the single GitHub URL.
+  const repos = project.repoLinks?.length
+    ? project.repoLinks
+    : project.githubUrl && project.githubUrl !== "#"
+    ? [{ label: "GitHub", url: project.githubUrl }]
+    : [];
+  const gallery = project.gallery ?? [];
 
   return (
     <main className="bg-[#eceef2] min-h-screen">
@@ -139,6 +149,18 @@ export default async function ProjectDetailPage({
                   Live Demo
                 </a>
               )}
+              {repos.map((repo) => (
+                <a
+                  key={repo.url}
+                  href={repo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
+                >
+                  <Github size={18} />
+                  {repo.label}
+                </a>
+              ))}
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full surface text-zinc-800 font-medium hover:bg-brand-700/10 transition-all duration-300"
@@ -178,6 +200,37 @@ export default async function ProjectDetailPage({
               )}
             </div>
           </Reveal>
+
+          {/* Gallery */}
+          {gallery.length > 0 && (
+            <Reveal>
+              <section className="mb-20">
+                <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 mb-7 flex items-center gap-3">
+                  <Images size={24} style={{ color: project.color }} />
+                  Screenshots
+                </h2>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  {gallery.map((src, i) => (
+                    <a
+                      key={src}
+                      href={src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative aspect-video rounded-2xl overflow-hidden surface block"
+                    >
+                      <Image
+                        src={src}
+                        alt={`${project.title} screenshot ${i + 1}`}
+                        fill
+                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, 550px"
+                      />
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+          )}
 
           {/* Content grid */}
           <div className="grid lg:grid-cols-[1fr_320px] gap-12">

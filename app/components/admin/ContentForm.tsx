@@ -41,11 +41,59 @@ function Field({
       <label className={label}>{lbl}</label>
       <input
         className={input}
-        value={value}
+        value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
       />
     </div>
+  );
+}
+
+const sameList = (a: string[], b: string[]) =>
+  a.length === b.length && a.every((v, i) => v === b[i]);
+
+// Text input/textarea bound to a string[]. Keeps the raw text locally so
+// newlines, trailing spaces and commas aren't stripped while typing.
+function ListInput({
+  value,
+  onChange,
+  mode,
+  rows,
+}: {
+  value: string[] | undefined;
+  onChange: (v: string[]) => void;
+  mode: "lines" | "comma";
+  rows?: number;
+}) {
+  const list = value ?? [];
+  const parse = mode === "lines" ? linesToArray : commaToArray;
+  const joiner = mode === "lines" ? "\n" : ", ";
+  const [text, setText] = useState(() => list.join(joiner));
+
+  // Resync only when the value changed from outside (e.g. initial load).
+  useEffect(() => {
+    setText((t) => (sameList(parse(t), list) ? t : list.join(joiner)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const handle = (v: string) => {
+    setText(v);
+    onChange(parse(v));
+  };
+
+  return mode === "lines" ? (
+    <textarea
+      className={`${input} resize-none`}
+      rows={rows ?? 3}
+      value={text}
+      onChange={(e) => handle(e.target.value)}
+    />
+  ) : (
+    <input
+      className={input}
+      value={text}
+      onChange={(e) => handle(e.target.value)}
+    />
   );
 }
 
@@ -223,22 +271,22 @@ export default function ContentForm() {
       {/* Hero intro */}
       <section className={card}>
         <h2 className={heading}>Hero Intro (one paragraph per line)</h2>
-        <textarea
-          className={`${input} resize-none`}
+        <ListInput
+          mode="lines"
           rows={4}
-          value={content.heroIntro.join("\n")}
-          onChange={(e) => patch({ heroIntro: linesToArray(e.target.value) })}
+          value={content.heroIntro}
+          onChange={(v) => patch({ heroIntro: v })}
         />
       </section>
 
       {/* About bio */}
       <section className={card}>
         <h2 className={heading}>About Page Bio (one paragraph per line)</h2>
-        <textarea
-          className={`${input} resize-none`}
+        <ListInput
+          mode="lines"
           rows={5}
-          value={content.aboutBio.join("\n")}
-          onChange={(e) => patch({ aboutBio: linesToArray(e.target.value) })}
+          value={content.aboutBio}
+          onChange={(v) => patch({ aboutBio: v })}
         />
       </section>
 
@@ -249,16 +297,13 @@ export default function ContentForm() {
           {(["frontend", "backend", "database", "tools"] as const).map((group) => (
             <div key={group}>
               <label className={`${label} capitalize`}>{group}</label>
-              <input
-                className={input}
-                value={content.skills[group].join(", ")}
-                onChange={(e) =>
-                  patch({
-                    skills: {
-                      ...content.skills,
-                      [group]: commaToArray(e.target.value),
-                    },
-                  })
+              <ListInput
+                mode="comma"
+                value={content.skills[group]}
+                onChange={(v) =>
+                  setContent((c) =>
+                    c ? { ...c, skills: { ...c.skills, [group]: v } } : c
+                  )
                 }
               />
             </div>
@@ -266,12 +311,10 @@ export default function ContentForm() {
         </div>
         <div>
           <label className={label}>"My Skills" bubbles (comma separated)</label>
-          <input
-            className={input}
-            value={content.marqueeSkills.join(", ")}
-            onChange={(e) =>
-              patch({ marqueeSkills: commaToArray(e.target.value) })
-            }
+          <ListInput
+            mode="comma"
+            value={content.marqueeSkills}
+            onChange={(v) => patch({ marqueeSkills: v })}
           />
         </div>
       </section>
@@ -335,11 +378,10 @@ export default function ContentForm() {
               </div>
               <div>
                 <label className={label}>Points (one per line)</label>
-                <textarea
-                  className={`${input} resize-none`}
-                  rows={3}
-                  value={exp.points.join("\n")}
-                  onChange={(e) => setExp({ points: linesToArray(e.target.value) })}
+                <ListInput
+                  mode="lines"
+                  value={exp.points}
+                  onChange={(v) => setExp({ points: v })}
                 />
               </div>
               <label className="flex items-center gap-2.5 text-sm text-zinc-300">
